@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'graphql_jwt',
     'django_graphiql',
 ]
+#değişiklik var mı#
 
 AUTHENTICATION_BACKENDS = [
     'graphql_jwt.backends.JSONWebTokenBackend',
