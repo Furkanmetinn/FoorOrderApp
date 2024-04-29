@@ -5,13 +5,14 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
-    urun = models.ForeignKey('self', on_delete=models.CASCADE)
+    
 
     def __str__(self):  
         return self.name
 
 
 class Musteri(models.Model):
+    id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=50)
     surname=models.CharField(max_length=100)
     email=models.EmailField()
@@ -36,8 +37,10 @@ class RestoranDetay(models.Model):
     telefon = models.CharField(max_length=10)
     acilis_saati = models.TimeField()
     kapanis_saati = models.TimeField()
+    email=models.EmailField()
     puan = models.DecimalField(max_digits=2, decimal_places=1, blank=True)
     resim = models.ImageField()
+    min_tutar=models.DecimalField(max_digits=2, decimal_places=1,blank=True)
 
 
     def __str__(self):
@@ -47,16 +50,16 @@ class Urun(models.Model):
     urun_id=models.IntegerField()
     name = models.CharField(max_length=100)
     image=models.ImageField()
-    price = models.DecimalField(max_digits=8, decimal_places=2)
-    description = models.TextField()
-    # category = models.CharField(max_length=50)
+    fiyat = models.DecimalField(max_digits=8, decimal_places=2)
+    detay = models.TextField()
+    category = models.ForeignKey('self', on_delete=models.CASCADE)
     # restaurant = models.ForeignKey(Restoran, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
     
 class Siparis(models.Model):
-    sip_id=models.IntegerField()
+    sip_id=models.IntegerField(default=0)
     mus_id = models.ForeignKey(Musteri, on_delete=models.CASCADE)
     siparis_tarihi = models.DateTimeField(auto_now_add=True)
     teslim_tarihi = models.DateField()

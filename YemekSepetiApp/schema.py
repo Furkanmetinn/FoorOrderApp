@@ -1,0 +1,30 @@
+import graphene
+from account.schema_account import login_schema
+from schema_graphql.Musteri import musteri_schema
+from schema_graphql.Restoran import restoran_schema
+from schema_graphql.RestoranDetay import restoranDetay_schema
+from schema_graphql.Siparis import siparis_schema 
+from schema_graphql.SiparisDetay import siparisDetay_schema
+from schema_graphql.Urun import urun_schema
+from graphene import Mutation
+
+
+class Query(graphene.ObjectType):
+    musteri=graphene.Field(musteri_schema.query)
+    restoran=graphene.Field(restoran_schema.query)
+    restoranDetay=graphene.Field(restoranDetay_schema.query)
+    siparis=graphene.Field(siparis_schema.query)
+    siparisDetay=graphene.Field(siparisDetay_schema.query)
+    urun=graphene.Field(urun_schema.query)
+    login=graphene.Field(login_schema.query)
+
+class Mutation (graphene.ObjectType):
+    musteri=graphene.Field(musteri_schema.mutation)
+    restoran=graphene.Field(restoran_schema.mutation)
+    restoranDetay=graphene.Field(restoranDetay_schema.mutation)
+    siparis=graphene.Field(siparis_schema.mutation)
+    siparisDetay=graphene.Field(siparisDetay_schema.mutation)
+    urun=graphene.Field(urun_schema.mutation)
+    login=graphene.Field(login_schema.mutation)
+
+schema=graphene.Schema(query=Query, mutation=Mutation)

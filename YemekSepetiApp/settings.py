@@ -38,7 +38,23 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'YemekSepeti',
+    'schema_graphql',
+    'account',
+    'YemekSepetiApp',
+    'graphene_django',
+    'schema',
+    'graphql_jwt',
+    'django_graphiql',
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+GRAPHENE = {
+    'SCHEMA':'YemekSepetiApp.schema.schem'
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

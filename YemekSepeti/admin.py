@@ -7,7 +7,7 @@ from .models import Category, Musteri, Restoran, RestoranDetay, Urun, Siparis, S
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description', 'urun']
+    list_display = ['name', 'description']
 
 @admin.register(Musteri)
 class MusteriAdmin(admin.ModelAdmin):
@@ -23,7 +23,7 @@ class RestoranDetayAdmin(admin.ModelAdmin):
 
 @admin.register(Urun)
 class UrunAdmin(admin.ModelAdmin):
-    list_display = ['urun_id', 'name', 'image', 'price', 'description']
+    list_display = ['urun_id', 'name', 'image', 'fiyat', 'detay','category']
 
 @admin.register(Siparis)
 class SiparisAdmin(admin.ModelAdmin):
