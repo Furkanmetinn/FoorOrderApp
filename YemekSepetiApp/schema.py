@@ -8,6 +8,8 @@ from schema_graphql.SiparisDetay import siparisDetay_schema
 from schema_graphql.Urun import urun_schema
 from schema_graphql.Category import kategori_schema
 from schema_graphql.TeslimatAdresi import teslimat_schema
+from schema_graphql.OdemeBilgisi import odeme_schema
+
 from graphene import Mutation
 
 
@@ -21,6 +23,9 @@ class Query(graphene.ObjectType):
     login=graphene.Field(login_schema.query)
     kategori=graphene.Field(kategori_schema.query)
     teslimat=graphene.Field(teslimat_schema.query)
+    odeme=graphene.Field(odeme_schema.query)
+
+
 
 class Mutation (graphene.ObjectType):
     musteri=graphene.Field(musteri_schema.mutation)
@@ -32,5 +37,6 @@ class Mutation (graphene.ObjectType):
     login=graphene.Field(login_schema.mutation)
     kategori=graphene.Field(kategori_schema.mutation)
     teslimat=graphene.Field(teslimat_schema.mutation)
+    odeme=graphene.Field(odeme_schema.query)
 
 schema=graphene.Schema(query=Query, mutation=Mutation)
