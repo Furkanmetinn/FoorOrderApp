@@ -20,7 +20,7 @@ class Query(graphene.ObjectType):
 
 class UrunEkle(graphene.Mutation):
     class Arguments:
-        id=graphene.ID()
+        urun_id=graphene.ID()
         name = graphene.String(required=True)
         image=graphene.String()
         fiyat=graphene.Decimal(required=True)
@@ -29,8 +29,8 @@ class UrunEkle(graphene.Mutation):
     urun=Field(UrunType)
 
     @classmethod
-    def mutate(cls,root,info,id,name,image,fiyat,detay,category):
-        urun=Urun.objects.get(pk=id)
+    def mutate(cls,root,info,urun_id,name,image,fiyat,detay,category):
+        urun=Urun.objects.get(pk=urun_id)
         urun.name=name
         urun.image=image
         urun.fiyat=fiyat
@@ -41,7 +41,7 @@ class UrunEkle(graphene.Mutation):
 
 class UrunGuncelle(graphene.Mutation):
     class Arguments:
-        id=graphene.ID()
+        urun_id=graphene.ID()
         name = graphene.String(required=True)
         image=graphene.String()
         fiyat=graphene.Decimal(required=True)
@@ -50,8 +50,8 @@ class UrunGuncelle(graphene.Mutation):
     urun=Field(UrunType)
 
     @classmethod
-    def mutate(cls,root,info,id,name,image,fiyat,detay,category):
-        urun=Urun.objects.get(pk=id)
+    def mutate(cls,root,info,urun_id,name,image,fiyat,detay,category):
+        urun=Urun.objects.get(pk=urun_id)
         urun.name=name
         urun.image=image
         urun.fiyat=fiyat
@@ -62,12 +62,12 @@ class UrunGuncelle(graphene.Mutation):
         
 class UrunSil(graphene.Mutation):
     class Arguments:
-        id=graphene.ID(required=True)
+        urun_id=graphene.ID(required=True)
     urun=Field(UrunType)
 
     @classmethod
-    def mutate(cls,root,info,id):
-        urun=Urun.objects.get(pk=id)
+    def mutate(cls,root,info,urun_id):
+        urun=Urun.objects.get(pk=urun_id)
         return UrunSil(urun=urun)
     
 class Mutation(graphene.ObjectType):

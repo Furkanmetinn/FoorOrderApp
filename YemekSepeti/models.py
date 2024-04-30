@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
-    description = models.TextField()
     
 
     def __str__(self):  
@@ -37,10 +36,10 @@ class RestoranDetay(models.Model):
     telefon = models.CharField(max_length=10)
     acilis_saati = models.TimeField()
     kapanis_saati = models.TimeField()
-    email=models.EmailField()
+    email=models.EmailField(blank=True)
     puan = models.DecimalField(max_digits=2, decimal_places=1, blank=True)
     resim = models.ImageField()
-    min_tutar=models.DecimalField(max_digits=2, decimal_places=1,blank=True)
+    min_tutar=models.DecimalField(max_digits=2, decimal_places=1,default=None)
 
 
     def __str__(self):
@@ -52,7 +51,7 @@ class Urun(models.Model):
     image=models.ImageField()
     fiyat = models.DecimalField(max_digits=8, decimal_places=2)
     detay = models.TextField()
-    category = models.ForeignKey('self', on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     # restaurant = models.ForeignKey(Restoran, on_delete=models.CASCADE)
 
     def __str__(self):

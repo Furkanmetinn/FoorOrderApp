@@ -2,12 +2,12 @@
 
 from django.contrib import admin
 from .models import Category, Musteri, Restoran, RestoranDetay, Urun, Siparis, SiparisDetay
-
+from account.models import Kullanici
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description']
+    list_display = ['name']
 
 @admin.register(Musteri)
 class MusteriAdmin(admin.ModelAdmin):
@@ -32,3 +32,7 @@ class SiparisAdmin(admin.ModelAdmin):
 @admin.register(SiparisDetay)
 class SiparisDetayAdmin(admin.ModelAdmin):
     list_display = ['siparis','urun', 'miktar', 'fiyat', 'toplam_tutar']
+
+@admin.register(Kullanici)
+class KullaniciAdmin(admin.ModelAdmin):
+    list_display = ['isim','soyisim', 'email', 'parola']

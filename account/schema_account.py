@@ -1,35 +1,33 @@
 import graphene
 from graphene_django import DjangoObjectType
-from .models import User
+import jwt
+from .models import Kullanici
 
-class UserType(DjangoObjectType):
+class KullaniciTipi(DjangoObjectType):
     class Meta:
-        model = User
+        model = Kullanici
 
-class Query(graphene.ObjectType):
-    user_by_id = graphene.Field(UserType, id=graphene.Int())
-    user_by_username = graphene.Field(UserType, username=graphene.String())
+class GirisMutasyonu(graphene.Mutation):
+    class Arguments:
+        email = graphene.String(required=True)
+        parola = graphene.String(required=True)
 
-    def resolve_user_by_id(self, info, id):
-        return User.objects.get(id=id)
+    class Meta:
+        description = "Kullanıcıyı giriş yapma"
 
-    def resolve_user_by_username(self, info, username):
-        return User.objects.get(username=username)
+    token = graphene.String()
 
-class Mutation(graphene.ObjectType):
-    register_user = graphene.Field(graphene.String, username=graphene.String(), email=graphene.String(), password=graphene.String())
-    login_user = graphene.Field(graphene.String, username=graphene.String(), password=graphene.String())
-
-    def resolve_register_user(self, info, username, email, password):
-        new_user = User(username=username, email=email, password=password)
-        new_user.save()
-        return "New user registered successfully!"
-
-    def resolve_login_user(self, info, username, password):
+    @classmethod
+    def mutate(self, info, email, parola):
         try:
-            user = User.objects.get(username=username, password=password)
-            return f"Login successful for {user.username}!"
-        except User.DoesNotExist:
-            return "Invalid username or password."
+            kullanici = Kullanici.objects.get(email=email)
+        except Kullanici.DoesNotExist:
+            raise Exception("Kullanıcı Bulunamadı")
 
-login_schema = graphene.Schema(query=Query, mutation=Mutation)
+        if not kullanici.check_password(parola):
+            raise Exception("Yanlış Parola")
+
+        token = jwt.encode({'user_id': kullanici.id}, 'secret', algorithm='HS256')
+        return GirisMutasyonu(token=token)
+
+login_schema = graphene.Schema(query=KullaniciTipi, mutation=GirisMutasyonu)

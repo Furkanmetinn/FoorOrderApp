@@ -30,7 +30,7 @@ class RestoranDetayEkle(graphene.Mutation):
         email=graphene.String()
         puan=graphene.Decimal(required=True)
         resim=graphene.String(required=True)
-        min_tutar=graphene.Decimal()
+        min_tutar=graphene.Decimal(required=True)
     restoranDetay=Field(RestoranDetayType)
         
     @classmethod
