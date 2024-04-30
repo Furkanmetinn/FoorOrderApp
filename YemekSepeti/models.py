@@ -70,10 +70,38 @@ class Siparis(models.Model):
     
 class SiparisDetay(models.Model):
     siparis = models.ForeignKey(Siparis, on_delete=models.CASCADE, related_name='siparis_detaylari')
-    urun = models.ForeignKey('Urun', on_delete=models.CASCADE)
+    urun = models.ForeignKey(Urun, on_delete=models.CASCADE)
     miktar = models.PositiveIntegerField()
     fiyat = models.DecimalField(max_digits=10, decimal_places=2)
     toplam_tutar = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return f"{self.siparis} - {self.urun}"
+
+class TeslimatAdresi(models.Model):
+    il=models.CharField(max_length=50)
+    ilce=models.CharField(max_length=50)
+    mahalle=models.CharField(max_length=50)
+    cadde=models.CharField(max_length=50)
+    bina=models.CharField(max_length=50)
+    kapi=models.CharField(max_length=50)
+    musteri=models.ForeignKey(Musteri,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.il
+
+
+class OdemeBilgileri(models.Model):
+    kart_sahibi=models.CharField(max_length=100)
+    kart_numarasi=models.IntegerField()
+    son_kullanma=models.IntegerField()
+    cvv=models.IntegerField()
+
+    def __str__(self):
+        return self.kart_sahibi
+
+
+
+
+    
+    
