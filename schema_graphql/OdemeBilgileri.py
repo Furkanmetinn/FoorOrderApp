@@ -1,7 +1,7 @@
 from graphene import Field,ObjectType
 import graphene 
 from graphene_django import DjangoObjectType 
-from YemekSepeti.models import TeslimatAdresi
+from YemekSepeti.models import OdemeBilgileri
 
 class OdemeType(DjangoObjectType):
     class Meta:
@@ -12,10 +12,10 @@ class Query(graphene.ObjectType):
     odemeler = graphene.List(OdemeType)
     odemeler=graphene.Field(OdemeType, id=graphene.String())
 
-    def resolve_teslimatlar(root, info):
+    def resolve_odemeler(root, info):
         return OdemeBilgileri.objects.all()
     
-    def resolve_teslimatlar_id(root,info, id):
+    def resolve_odemeler_id(root,info, id):
         return OdemeBilgileri.objects.get(pk=id)
 
 
@@ -49,12 +49,12 @@ class OdemeGuncelle(graphene.Mutation):
         
 
 
-    odeme=Field(TeslimatType)
+    odeme=Field(OdemeType)
 
     @classmethod
     def mutate(cls,root,info,id,kart_sahibi,kart_numarasi,son_kullanma,cvv):
-        odeme=OdemeBilgisi.objects.get(pk=id)
-      odeme.kart_sahibi=kart_sahibi
+        odeme=OdemeBilgileri.objects.get(pk=id)
+        odeme.kart_sahibi=kart_sahibi
         odeme.kart_numarasi=kart_numarasi
         odeme.son_kullanma=son_kullanma
         odeme.cvv=cvv
@@ -68,7 +68,7 @@ class OdemeSil(graphene.Mutation):
 
     @classmethod
     def mutate(cls,root,info,id):
-        odeme=OdemeBilgisi.objects.get(pk=id)
+        odeme=OdemeBilgileri.objects.get(pk=id)
         return OdemeSil(odeme=odeme)
     
 class Mutation(graphene.ObjectType):

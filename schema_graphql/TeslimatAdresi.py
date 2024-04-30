@@ -28,7 +28,7 @@ class TeslimatEkle(graphene.Mutation):
         cadde=graphene.String(required=True)
         bina=graphene.String(required=True)
         kapi=graphene.String(required=True)
-        musteri=grapheneString(required=True)
+        musteri=graphene.String(required=True)
     Teslimat_Adresi=Field(TeslimatType)
 
     @classmethod
