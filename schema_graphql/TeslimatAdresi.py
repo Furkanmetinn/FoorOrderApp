@@ -86,7 +86,4 @@ class Mutation(graphene.ObjectType):
     teslimat_guncelle=TeslimatGuncelle.Field()
     teslimat_sil=TeslimatSil.Field()
 
-
-
-
 teslimat_schema = graphene.Schema(query=Query, mutation=Mutation)

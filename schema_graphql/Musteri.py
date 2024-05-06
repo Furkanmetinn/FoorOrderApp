@@ -76,7 +76,4 @@ class Mutation(graphene.ObjectType):
     musteri_guncelle=MusteriGuncelle.Field()
     musteri_sil=MusteriSil.Field()
 
-
-
-
 musteri_schema = graphene.Schema(query=Query, mutation=Mutation)

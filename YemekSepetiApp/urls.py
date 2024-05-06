@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import path
-from account.views import graphql_view
+# from account.views import graphql_view
 from graphene_django import views
 from YemekSepetiApp.schema import schema
 

@@ -76,7 +76,4 @@ class Mutation(graphene.ObjectType):
     odeme_guncelle=OdemeGuncelle.Field()
     odeme_sil=OdemeSil.Field()
 
-
-
-
 odeme_schema = graphene.Schema(query=Query, mutation=Mutation)

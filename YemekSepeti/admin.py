@@ -33,6 +33,6 @@ class SiparisAdmin(admin.ModelAdmin):
 class SiparisDetayAdmin(admin.ModelAdmin):
     list_display = ['siparis','urun', 'miktar', 'fiyat', 'toplam_tutar']
 
-@admin.register(Kullanici)
-class KullaniciAdmin(admin.ModelAdmin):
-    list_display = ['isim','soyisim', 'email', 'parola']
+# @admin.register(Kullanici)
+# class KullaniciAdmin(admin.ModelAdmin):
+#     list_display = ['isim','soyisim', 'email', 'parola']

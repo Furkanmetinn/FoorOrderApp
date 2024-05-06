@@ -1,5 +1,6 @@
 import graphene
-from account.schema_account import login_schema
+from account.login_schema import login_schema
+from account.register_schema import kullanici_schema
 from schema_graphql.Musteri import musteri_schema
 from schema_graphql.Restoran import restoran_schema
 from schema_graphql.RestoranDetay import restoranDetay_schema
@@ -24,6 +25,7 @@ class Query(graphene.ObjectType):
     kategori=graphene.Field(kategori_schema.query)
     teslimat=graphene.Field(teslimat_schema.query)
     odeme=graphene.Field(odeme_schema.query)
+    kullanici=graphene.Field(kullanici_schema.query)
 
 
 
@@ -38,5 +40,6 @@ class Mutation (graphene.ObjectType):
     kategori=graphene.Field(kategori_schema.mutation)
     teslimat=graphene.Field(teslimat_schema.mutation)
     odeme=graphene.Field(odeme_schema.mutation)
+    kullanici=graphene.Field(kullanici_schema.mutation)
 
 schema=graphene.Schema(query=Query, mutation=Mutation)
