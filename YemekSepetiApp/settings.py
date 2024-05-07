@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-@e4l!qu4fwgv4l*(lmd-hfw*)y&ktb_d5$vik97dpxxr5q90d$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '10.0.0.2',
+    '127.0.0.1'
+]
 
 
 # Application definition
@@ -54,7 +57,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 GRAPHENE = {
-    'SCHEMA':'YemekSepetiApp.schema.schem'
+    'SCHEMA':'YemekSepetiApp.schema.schem',
 }
 
 MIDDLEWARE = [

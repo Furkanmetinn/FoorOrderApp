@@ -21,7 +21,7 @@ class Musteri(models.Model):
     def __str__(self):
         return self.name
 class Urun(models.Model):
-    urun_id=models.IntegerField()
+    urun_id=models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     image=models.ImageField()
     fiyat = models.DecimalField(max_digits=8, decimal_places=2)
@@ -36,7 +36,7 @@ class Restoran(models.Model):
     name = models.CharField(max_length=100)
     adres = models.CharField(max_length=255)
     telefon = models.CharField(max_length=15)
-    urun = models.ForeignKey(Urun, on_delete=models.CASCADE)
+    urun = models.ForeignKey(Urun, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.name

@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 from .models import Category, Musteri, Restoran, RestoranDetay, Urun, Siparis, SiparisDetay
-from account.models import Kullanici
+# from account.models import Kullanici
 
 
 @admin.register(Category)
