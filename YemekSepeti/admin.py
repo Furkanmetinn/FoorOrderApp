@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 from .models import Category, Musteri, Restoran, RestoranDetay, Urun, Siparis, SiparisDetay
-# from account.models import Kullanici
+from account.models import Kullanici
 
 
 @admin.register(Category)
@@ -33,6 +33,6 @@ class SiparisAdmin(admin.ModelAdmin):
 class SiparisDetayAdmin(admin.ModelAdmin):
     list_display = ['siparis','urun', 'miktar', 'fiyat', 'toplam_tutar']
 
-# @admin.register(Kullanici)
-# class KullaniciAdmin(admin.ModelAdmin):
-#     list_display = ['isim','soyisim', 'email', 'parola']
+@admin.register(Kullanici)
+class KullaniciAdmin(admin.ModelAdmin):
+    list_display = ['isim','soyisim', 'email', 'sifre','sifre_dogrulama','hesap_tipi']

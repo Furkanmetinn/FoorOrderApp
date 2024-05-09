@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'YemekSepeti',
-    'schema_graphql',
     'account',
     'YemekSepetiApp',
     'graphene_django',
@@ -49,7 +48,6 @@ INSTALLED_APPS = [
     'graphql_jwt',
     'django_graphiql',
 ]
-#değişiklik var mı#
 
 AUTHENTICATION_BACKENDS = [
     'graphql_jwt.backends.JSONWebTokenBackend',
@@ -57,7 +55,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 GRAPHENE = {
-    'SCHEMA':'YemekSepetiApp.schema.schem',
+    'SCHEMA':'YemekSepetiApp.schema.schema',
+    "MIDDLEWARE": ["graphql_jwt.middleware.JSONWebTokenMiddleware",],
 }
 
 MIDDLEWARE = [
@@ -68,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
 ]
 
 ROOT_URLCONF = 'YemekSepetiApp.urls'
@@ -142,3 +142,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ORIGIN_ALLOW_ALL = True

@@ -1,45 +1,18 @@
 import graphene
-# # from account.login_schema import login_schema
-# from account.register_schema import kullanici_schema
-from schema_graphql.Musteri import musteri_schema
-from schema_graphql.Restoran import restoran_schema
-from schema_graphql.RestoranDetay import restoranDetay_schema
-from schema_graphql.Siparis import siparis_schema 
-from schema_graphql.SiparisDetay import siparisDetay_schema
-from schema_graphql.Urun import urun_schema
-from schema_graphql.Category import kategori_schema
-from schema_graphql.TeslimatAdresi import teslimat_schema
-from schema_graphql.OdemeBilgileri import odeme_schema
+import YemekSepeti.schema as yemek_sepeti_schema
+import account.schema as account_schema
 
-from graphene import Mutation
+class Query(
+            yemek_sepeti_schema.Query,
+            account_schema.Query,
+            graphene.ObjectType):
+    pass
 
 
-class Query(graphene.ObjectType):
-    musteri=graphene.Field(musteri_schema.query)
-    restoran=graphene.Field(restoran_schema.query)
-    restoranDetay=graphene.Field(restoranDetay_schema.query)
-    siparis=graphene.Field(siparis_schema.query)
-    siparisDetay=graphene.Field(siparisDetay_schema.query)
-    urun=graphene.Field(urun_schema.query)
-    # login=graphene.Field(login_schema.query)
-    kategori=graphene.Field(kategori_schema.query)
-    teslimat=graphene.Field(teslimat_schema.query)
-    odeme=graphene.Field(odeme_schema.query)
-    # kullanici=graphene.Field(kullanici_schema.query)
-
-
-
-class Mutation (graphene.ObjectType):
-    musteri=graphene.Field(musteri_schema.mutation)
-    restoran=graphene.Field(restoran_schema.mutation)
-    restoranDetay=graphene.Field(restoranDetay_schema.mutation)
-    siparis=graphene.Field(siparis_schema.mutation)
-    siparisDetay=graphene.Field(siparisDetay_schema.mutation)
-    urun=graphene.Field(urun_schema.mutation)
-    # login=graphene.Field(login_schema.mutation)
-    kategori=graphene.Field(kategori_schema.mutation)
-    teslimat=graphene.Field(teslimat_schema.mutation)
-    odeme=graphene.Field(odeme_schema.mutation)
-    # kullanici=graphene.Field(kullanici_schema.mutation)
+class Mutation(
+            yemek_sepeti_schema.Mutation,
+            account_schema.Mutation,
+            graphene.ObjectType):
+    pass
 
 schema=graphene.Schema(query=Query, mutation=Mutation)
