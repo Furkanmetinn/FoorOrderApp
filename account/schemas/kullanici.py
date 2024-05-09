@@ -23,6 +23,7 @@ class KullaniciEkle(graphene.Mutation):
     @classmethod
     def mutate(cls,root,info,isim,soyisim,email,sifre,sifre_dogrulama, hesap_tipi):
         kullanici=Kullanici()
+        kullanici.isim=isim
         kullanici.soyisim=soyisim
         kullanici.email=email
         kullanici.sifre=sifre
