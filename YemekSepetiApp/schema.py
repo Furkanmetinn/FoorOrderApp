@@ -4,7 +4,7 @@ import account.schema as account_schema
 
 class Query(
             yemek_sepeti_schema.Query,
-            account_schema.Query,
+            # account_schema.Query,
             graphene.ObjectType):
     pass
 

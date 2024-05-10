@@ -66,19 +66,11 @@ class KullaniciSil(graphene.Mutation):
         kullanici=Kullanici.objects.get(pk=id)
         return KullaniciSil(kullanici=kullanici)
 
-class Mutation(graphene.ObjectType):
-    kullanici_ekle=KullaniciEkle.Field()
-    kullanici_guncelle=KullaniciGuncelle.Field()
-    kullanici_sil=KullaniciSil.Field
-
-class Query(graphene.ObjectType):
-    login = graphene.Field(
-        KullaniciType, email=graphene.String(), sifre=graphene.String()
-    )
-    kullanicilar = graphene.List(KullaniciType)
-
-    def resolve_kullanicilar(self, info):
-        return Kullanici.objects.all()
+class Login(graphene.Mutation):
+    class Arguments:
+        email=graphene.String(required=True)
+        sifre=graphene.String(required=True)
+    login=Field(KullaniciType)
 
     def resolve_login(self, info, email, sifre, **kwargs):
         auth_user = authenticate(email=email, sifre=sifre)
@@ -87,5 +79,20 @@ class Query(graphene.ObjectType):
             raise Exception("Geçersiz kimlik bilgileri")
 
         return Kullanici
+    
+    @classmethod
+    def mutate(cls, root, info, email,sifre):
+        login=Login()
+        login.email=email
+        login.sifre=sifre
+        login.save()
+        return Login(login=login)
+    
+    
+class Mutation(graphene.ObjectType):
+    kullanici_ekle=KullaniciEkle.Field()
+    kullanici_guncelle=KullaniciGuncelle.Field()
+    kullanici_sil=KullaniciSil.Field()
+    login=Login.Field()
 
-kullanici_schema=graphene.Schema(query=Query,mutation=Mutation)
+kullanici_schema=graphene.Schema(mutation=Mutation)
