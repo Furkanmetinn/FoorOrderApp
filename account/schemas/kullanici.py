@@ -3,6 +3,9 @@ import graphene
 from django.contrib.auth import authenticate
 from graphene_django import DjangoObjectType
 from account.models import Kullanici
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 
 
 class KullaniciType(DjangoObjectType):
@@ -88,11 +91,30 @@ class Login(graphene.Mutation):
         login.save()
         return Login(login=login)
     
-    
+class ResetPassword(graphene.Mutation):
+    class Arguments:
+        email = graphene.String(required=True)
+
+    success = graphene.Boolean()
+
+    @classmethod
+    def mutate(cls, root, info, email):
+        user_model = Kullanici()
+        try:
+            user = user_model.objects.get(email=email)
+        except user_model.DoesNotExist:
+            return ResetPassword(success=False)
+
+        token_generator = PasswordResetTokenGenerator()
+        token = token_generator.make_token(user)
+
+        return ResetPassword(success=True)
+
 class Mutation(graphene.ObjectType):
     kullanici_ekle=KullaniciEkle.Field()
     kullanici_guncelle=KullaniciGuncelle.Field()
     kullanici_sil=KullaniciSil.Field()
     login=Login.Field()
+    reset_password = ResetPassword.Field()
 
 kullanici_schema=graphene.Schema(mutation=Mutation)

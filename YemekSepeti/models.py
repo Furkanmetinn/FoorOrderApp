@@ -38,6 +38,7 @@ class Restoran(models.Model):
     adres = models.CharField(max_length=255)
     telefon = models.CharField(max_length=15)
     urun = models.ForeignKey(Urun, on_delete=models.CASCADE, default=1)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.name
