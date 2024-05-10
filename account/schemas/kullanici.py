@@ -69,7 +69,7 @@ class KullaniciSil(graphene.Mutation):
 class Mutation(graphene.ObjectType):
     kullanici_ekle=KullaniciEkle.Field()
     kullanici_guncelle=KullaniciGuncelle.Field()
-    kullanici_sil=KullaniciSil.Field()
+    kullanici_sil=KullaniciSil.Field
 
 class Query(graphene.ObjectType):
     login = graphene.Field(
