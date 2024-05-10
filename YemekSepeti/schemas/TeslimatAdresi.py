@@ -9,13 +9,10 @@ class TeslimatType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     teslimatlar = graphene.List(TeslimatType)
-    teslimatlar_id=graphene.Field(TeslimatType, id=graphene.String())
 
     def resolve_teslimatlar(root, info):
         return TeslimatAdresi.objects.all()
     
-    def resolve_teslimatlar_id(root,info, id):
-        return TeslimatAdresi.objects.get(pk=id)
 
 
 class TeslimatEkle(graphene.Mutation):
@@ -32,7 +29,7 @@ class TeslimatEkle(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info, id, il, ilce,mahalle,cadde,bina,kapi,musteri):
-        teslimat=TeslimatAdresi.objects.get(pk=id)
+        teslimat=TeslimatAdresi()
         teslimat.il=il
         teslimat.ilce=ilce
         teslimat.mahalle=mahalle

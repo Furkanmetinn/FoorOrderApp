@@ -10,14 +10,10 @@ class OdemeType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     odemeler = graphene.List(OdemeType)
-    odemeler=graphene.Field(OdemeType, id=graphene.String())
 
     def resolve_odemeler(root, info):
         return OdemeBilgileri.objects.all()
     
-    def resolve_odemeler_id(root,info, id):
-        return OdemeBilgileri.objects.get(pk=id)
-
 
 class OdemeEkle(graphene.Mutation):
     class Arguments:
@@ -31,7 +27,7 @@ class OdemeEkle(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info, id,kart_sahibi,kart_numarasi,son_kullanma,cvv):
-        odeme=OdemeBilgileri.objects.get(pk=id)
+        odeme=OdemeBilgileri()
         odeme.kart_sahibi=kart_sahibi
         odeme.kart_numarasi=kart_numarasi
         odeme.son_kullanma=son_kullanma

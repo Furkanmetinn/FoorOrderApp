@@ -9,14 +9,11 @@ class MusteriType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     musteriler = graphene.List(MusteriType)
-    musteriler_id=graphene.Field(MusteriType, id=graphene.String())
 
     def resolve_musteriler(root, info):
         return Musteri.objects.all()
     
-    def resolve_musteriler_id(root,info, id):
-        return Musteri.objects.get(pk=id)
-
+    
 
 class MusteriEkle(graphene.Mutation):
     class Arguments:
@@ -30,7 +27,7 @@ class MusteriEkle(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info, id, name, surname,adres,email, telefon):
-        musteri=Musteri.objects.get(pk=id)
+        musteri=Musteri()
         musteri.name=name
         musteri.surname=surname
         musteri.adres=adres

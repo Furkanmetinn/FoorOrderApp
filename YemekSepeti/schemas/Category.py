@@ -13,8 +13,7 @@ class Query(graphene.ObjectType):
     def resolve_kategoriler(root,info):
         return Category.objects.all()
     
-    def resolve_kategoriler_id(root,info):
-        return Category.objects.get(pk=id)
+    
     
 class KategoriEkle(graphene.Mutation):
     class Arguments:
@@ -24,7 +23,7 @@ class KategoriEkle(graphene.Mutation):
 
     @classmethod
     def mutate(cls,root,info,id,name):
-        kategori=Category.objects.get(pk=id)
+        kategori=Category()
         kategori.name=name
         kategori.save()
         return KategoriEkle(kategori=kategori)

@@ -9,14 +9,10 @@ class SiparisDetayType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     siparisDetay = graphene.List(SiparisDetayType)
-    siparisDetay_id=graphene.Field(SiparisDetayType, id=graphene.String())
 
     def resolve_siparisDetay(root, info):
         return SiparisDetay.objects.all()
     
-    def resolve_siparisDetay_id(root, info, id):
-        return SiparisDetay.objects.get(pk=id)
-
 
 
 class SiparisDetayEkle(graphene.Mutation):
@@ -31,7 +27,7 @@ class SiparisDetayEkle(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root,info, id,siparis,urun,miktar,fiyat,toplam_tutar):
-        siparisDetay=SiparisDetay.objects.get(pk=id)
+        siparisDetay=SiparisDetay()
         siparisDetay.siparis=siparis
         siparisDetay.urun=urun
         siparisDetay.miktar=miktar

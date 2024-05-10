@@ -9,13 +9,10 @@ class UrunType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     urunler = graphene.List(UrunType)
-    urunler_id=graphene.Field(UrunType, id=graphene.String())
 
     def resolve_urunler(root, info):
         return Urun.objects.all()
     
-    def resolve_urunler_id(root,info,id):
-        return Urun.objects.get(pk=id)
 
 class UrunEkle(graphene.Mutation):
     class Arguments:
@@ -29,7 +26,7 @@ class UrunEkle(graphene.Mutation):
 
     @classmethod
     def mutate(cls,root,info,urun_id,name,image,fiyat,detay,category):
-        urun=Urun.objects.get(pk=urun_id)
+        urun=Urun()
         urun.name=name
         urun.image=image
         urun.fiyat=fiyat

@@ -33,8 +33,43 @@ class KullaniciEkle(graphene.Mutation):
         return KullaniciEkle(kullanici=kullanici)
 
 
+class KullaniciGuncelle(graphene.Mutation):
+    class Arguments:
+        id=graphene.ID()
+        isim=graphene.String(required=True)
+        soyisim=graphene.String(required=True)
+        email=graphene.String(required=True)
+        sifre=graphene.String(required=True)
+        sifre_dogrulama=graphene.String(required=True)
+        hesap_tipi=graphene.String(required=True)
+    kullanici=Field(KullaniciType)
+
+    @classmethod
+    def mutate(cls, root, info, id,isim,soyisim,email,sifre,sifre_dogrulama,hesap_tipi):
+        kullanici=Kullanici.objects.get(pk=id)
+        kullanici.isim=isim
+        kullanici.soyisim=soyisim
+        kullanici.email=email
+        kullanici.sifre=sifre
+        kullanici.sifre_dogrulama=sifre_dogrulama
+        kullanici.hesap_tipi=hesap_tipi
+        kullanici.save()
+        return KullaniciGuncelle(kullanici=kullanici)
+    
+class KullaniciSil(graphene.Mutation):
+    class Arguments:
+        id=graphene.ID()
+    kullanici=Field(KullaniciType)
+
+    @classmethod
+    def mutate(cls,root,info,id):
+        kullanici=Kullanici.objects.get(pk=id)
+        return KullaniciSil(kullanici=kullanici)
+
 class Mutation(graphene.ObjectType):
     kullanici_ekle=KullaniciEkle.Field()
+    kullanici_guncelle=KullaniciGuncelle.Field()
+    kullanici_sil=KullaniciSil.Field()
 
 class Query(graphene.ObjectType):
     login = graphene.Field(

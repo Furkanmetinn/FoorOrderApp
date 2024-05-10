@@ -8,13 +8,10 @@ class SiparisType(DjangoObjectType):
         model = Siparis
 class Query(graphene.ObjectType):
     siparisler = graphene.List(SiparisType)
-    siparisler_id=graphene.Field(SiparisType, id=graphene.String())
 
     def resolve_siparisler(root, info):
         return Siparis.objects.all()
 
-    def resolve_siparisler_id(root,info, id):
-        return Siparis.objects.get(pk=id)
 
 
 class SiparisEkle(graphene.Mutation):
@@ -29,7 +26,7 @@ class SiparisEkle(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info,sip_id,mus_id,siparis_tarihi,teslim_tarihi, tutar,durum):
-        siparis=Siparis.objects.get(pk=sip_id)
+        siparis=Siparis()
         siparis.mus_id=mus_id
         siparis.siparis_tarihi=siparis_tarihi
         siparis.teslim_tarihi=teslim_tarihi

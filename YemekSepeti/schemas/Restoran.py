@@ -9,12 +9,9 @@ class RestoranType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     restoranlar = graphene.List(RestoranType)
-    restoranlar_id=graphene.Field(RestoranType, id=graphene.String())
 
     def resolve_restoranlar(root, info):
         return Restoran.objects.all()
-    def resolve_restoranlar_id(root,info,id):
-        return Restoran.objects.get(pk=id)
 
 
 
@@ -28,7 +25,7 @@ class RestoranEkle(graphene.Mutation):
         
     @classmethod
     def mutate(cls, root, info, id, name, adres, telefon):
-        restoran=Restoran.objects.get(pk=id)
+        restoran=Restoran()
         restoran.name=name
         restoran.adres=adres
         restoran.telefon=telefon
