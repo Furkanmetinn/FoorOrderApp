@@ -4,18 +4,15 @@ from django.contrib.auth import authenticate
 from graphene_django import DjangoObjectType
 from account.models import Kullanici
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
-
 
 class KullaniciType(DjangoObjectType):
     class Meta:
         model= Kullanici
 
 class Query(graphene.ObjectType):
-    musteriler = graphene.List(KullaniciType)
+    kullanicilar = graphene.List(KullaniciType)
 
-    def resolve_musteriler(root, info):
+    def resolve_kullanicilar(root, info):
         return Kullanici.objects.all()
     
     

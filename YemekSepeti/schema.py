@@ -1,4 +1,3 @@
-from .schemas.Musteri import musteri_schema as musteri_schema
 from .schemas.Category import kategori_schema as category_schema
 from .schemas.OdemeBilgileri import odeme_schema as odeme_bilgileri_schema
 from .schemas.Restoran import restoran_schema as restoran_schema
@@ -11,7 +10,6 @@ from .schemas.Urun import urun_schema as urun_schema
 import graphene
 
 class Query(
-            musteri_schema.Query,
             category_schema.Query,
             odeme_bilgileri_schema.Query,
             restoran_schema.Query,
@@ -25,7 +23,6 @@ class Query(
     pass
 
 class Mutation(
-            musteri_schema.Mutation,
             category_schema.Mutation,
             odeme_bilgileri_schema.Mutation,
             restoran_schema.Mutation,

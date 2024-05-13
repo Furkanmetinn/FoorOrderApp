@@ -1,17 +1,13 @@
 # admin.py
 
 from django.contrib import admin
-from .models import Category, Musteri, Restoran, RestoranDetay, Urun, Siparis, SiparisDetay
+from .models import Category, Restoran, RestoranDetay, Urun, Siparis, SiparisDetay
 from account.models import Kullanici
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name']
-
-@admin.register(Musteri)
-class MusteriAdmin(admin.ModelAdmin):
-    list_display = ['name', 'surname', 'email', 'telefon', 'adres']
 
 @admin.register(Restoran)
 class RestoranAdmin(admin.ModelAdmin):
