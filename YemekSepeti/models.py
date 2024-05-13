@@ -30,28 +30,18 @@ class Restoran(models.Model):
     name = models.CharField(max_length=100)
     adres = models.CharField(max_length=255)
     telefon = models.CharField(max_length=15)
-    category=models.CharField(max_length=20)
-    urun = models.ForeignKey(Urun, on_delete=models.CASCADE, default=1)
-    
-
-    def __str__(self):
-        return self.name
-
-class RestoranDetay(models.Model):
-    restoran_name = models.CharField(max_length=255)
-    adres = models.CharField(max_length=255)
-    telefon = models.CharField(max_length=10)
     acilis_saati = models.TimeField()
     kapanis_saati = models.TimeField()
     email=models.EmailField(blank=True)
     puan = models.DecimalField(max_digits=2, decimal_places=1, blank=True)
     resim = models.ImageField()
     min_tutar=models.DecimalField(max_digits=2, decimal_places=1,default=None)
-
+    category=models.CharField(max_length=20)
+    urun = models.ForeignKey(Urun, on_delete=models.CASCADE, default=1)
+    
 
     def __str__(self):
-        return self.restoran_name
-
+        return self.name
 
     
 class Siparis(models.Model):

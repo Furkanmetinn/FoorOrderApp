@@ -1,7 +1,7 @@
 # admin.py
 
 from django.contrib import admin
-from .models import Category, Restoran, RestoranDetay, Urun, Siparis, SiparisDetay
+from .models import Category, Restoran, Urun, Siparis, SiparisDetay
 from account.models import Kullanici
 
 
@@ -11,11 +11,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Restoran)
 class RestoranAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'adres', 'telefon']
-
-@admin.register(RestoranDetay)
-class RestoranDetayAdmin(admin.ModelAdmin):
-    list_display = ['restoran_name', 'adres', 'telefon', 'acilis_saati', 'kapanis_saati', 'puan', 'resim']
+    list_display = ['id', 'name', 'adres', 'telefon','acilis_saati', 'kapanis_saati', 'puan', 'resim','category','urun']
 
 @admin.register(Urun)
 class UrunAdmin(admin.ModelAdmin):
