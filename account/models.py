@@ -4,7 +4,7 @@ from django.db import models
 class Kullanici(models.Model):
     isim = models.CharField(max_length=255)
     soyisim = models.CharField(max_length=255)
-    email = models.EmailField(max_length=50, unique=True)
+    email = models.EmailField(blank=True)
     sifre = models.CharField(max_length=255)
     sifre_dogrulama=models.CharField(max_length=20)
     hesap_tipi=models.CharField(max_length=20, choices=[("Kullanici","Kullanici"),("Restoran","Restoran")])
