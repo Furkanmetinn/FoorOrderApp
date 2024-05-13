@@ -12,6 +12,12 @@ class KullaniciType(DjangoObjectType):
     class Meta:
         model= Kullanici
 
+class Query(graphene.ObjectType):
+    musteriler = graphene.List(KullaniciType)
+
+    def resolve_musteriler(root, info):
+        return Kullanici.objects.all()
+    
     
 class KullaniciEkle(graphene.Mutation):
     class Arguments:
@@ -117,4 +123,4 @@ class Mutation(graphene.ObjectType):
     login=Login.Field()
     reset_password = ResetPassword.Field()
 
-kullanici_schema=graphene.Schema(mutation=Mutation)
+kullanici_schema=graphene.Schema(query=Query,mutation=Mutation)
