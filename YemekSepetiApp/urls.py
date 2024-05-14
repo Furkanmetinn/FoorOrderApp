@@ -17,9 +17,10 @@ from django.contrib import admin
 from django.urls import path
 from graphene_django import views
 from YemekSepetiApp.schema import schema
+from django.views.decorators.csrf import csrf_exempt
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("graphql/", views.GraphQLView.as_view(schema=schema,graphiql=True )),
+    path("graphql/", csrf_exempt(views.GraphQLView.as_view(schema=schema,graphiql=True ))),
 ]

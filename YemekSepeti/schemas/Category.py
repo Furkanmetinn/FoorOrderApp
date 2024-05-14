@@ -9,8 +9,8 @@ class CategoryType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     kategoriler=graphene.List(CategoryType)
-
     def resolve_kategoriler(root,info):
+        print("_______________")
         return Category.objects.all()
     
     
