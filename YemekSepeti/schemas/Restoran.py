@@ -1,7 +1,7 @@
-from graphene import Field
+from graphene import Decimal, Field, ObjectType
 import graphene 
 from graphene_django import DjangoObjectType
-from YemekSepeti.models import Restoran
+from YemekSepeti.models import Restoran,Urun
 
 class RestoranType(DjangoObjectType):
     class Meta:
@@ -14,6 +14,9 @@ class Query(graphene.ObjectType):
         return Restoran.objects.all()
 
 
+class UrunInput(graphene.InputObjectType):
+    detay = graphene.String()
+    fiyat = graphene.Decimal()
 
 class RestoranEkle(graphene.Mutation):
     class Arguments:
@@ -28,11 +31,12 @@ class RestoranEkle(graphene.Mutation):
         resim=graphene.String(required=True)
         min_tutar=graphene.Decimal(required=True)
         category=graphene.String(required=True)
-        urun=graphene.String(required=True)
+        urun=UrunInput(required=True)
+
     restoran=Field(RestoranType)
         
     @classmethod
-    def mutate(cls,root,info,id,name,adres,telefon,acilis_saati,kapanis_saati,email,puan,resim,min_tutar,category,urun):
+    def mutate(cls,root,info,name,adres,telefon,acilis_saati,kapanis_saati,email,puan,resim,min_tutar,category,urun):
         restoran=Restoran()
         restoran.name=name
         restoran.adres=adres
@@ -40,11 +44,14 @@ class RestoranEkle(graphene.Mutation):
         restoran.acilis_saati=acilis_saati
         restoran.kapanis_saati=kapanis_saati
         restoran.email=email
-        restoran.puan=puan
+        restoran.puan=Decimal(puan)
         restoran.resim=resim
-        restoran.min_tutar=min_tutar
+        restoran.min_tutar=Decimal(min_tutar)
         restoran.category=category
-        restoran.urun=urun
+        
+        # urun=Urun(detay=urun.detay,fiyat=urun.fiyat)
+        # urun.save()
+        # restoran.urun_id=urun.urun_id
         restoran.save()
         return RestoranEkle(restoran=restoran)
 
@@ -77,7 +84,7 @@ class RestoranGuncelle(graphene.Mutation):
         restoran.resim=resim
         restoran.min_tutar=min_tutar
         restoran.category=category
-        restoran.urun=urun
+        #restoran.urun=urun
         restoran.save()
         return RestoranGuncelle(restoran=restoran)
           
