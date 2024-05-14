@@ -16,8 +16,6 @@ class Query(graphene.ObjectType):
 
 class SiparisEkle(graphene.Mutation):
     class Arguments:
-        sip_id=graphene.ID()
-        mus_id=graphene.ID(required=True)
         siparis_tarihi=graphene.DateTime(required=True)
         teslim_tarihi=graphene.DateTime(required=True)
         tutar=graphene.Decimal(required=True)
@@ -25,9 +23,8 @@ class SiparisEkle(graphene.Mutation):
     siparis=Field(SiparisType)
 
     @classmethod
-    def mutate(cls, root, info,sip_id,mus_id,siparis_tarihi,teslim_tarihi, tutar,durum):
+    def mutate(cls, root, info,siparis_tarihi,teslim_tarihi, tutar,durum):
         siparis=Siparis()
-        siparis.mus_id=mus_id
         siparis.siparis_tarihi=siparis_tarihi
         siparis.teslim_tarihi=teslim_tarihi
         siparis.tutar=tutar
@@ -37,8 +34,6 @@ class SiparisEkle(graphene.Mutation):
 
 class SiparisGuncelle(graphene.Mutation):
     class Arguments:
-        sip_id=graphene.ID(required=True)
-        mus_id=graphene.ID(required=True)
         siparis_tarihi=graphene.DateTime(required=True)
         teslim_tarihi=graphene.DateTime(required=True)
         tutar=graphene.Decimal(required=True)
@@ -46,9 +41,8 @@ class SiparisGuncelle(graphene.Mutation):
     siparis=Field(SiparisType)
 
     @classmethod
-    def mutate(cls,root, info,sip_id,mus_id,siparis_tarihi,teslim_tarihi,tutar,durum):
-        siparis=Siparis.objects.get(pk=sip_id)
-        siparis.mus_id=mus_id
+    def mutate(cls,root, info,siparis_tarihi,teslim_tarihi,tutar,durum):
+        siparis=Siparis.objects.get(pk=id)
         siparis.siparis_tarihi=siparis_tarihi
         siparis.teslim_tarihi=teslim_tarihi
         siparis.tutar=tutar
@@ -63,8 +57,8 @@ class SiparisSil(graphene.Mutation):
     siparis=Field(SiparisType)
 
     @classmethod
-    def mutate(cls,root,info,sip_id):
-        siparis=Siparis.objects.get(pk=sip_id)
+    def mutate(cls,root,info,id):
+        siparis=Siparis.objects.get(pk=id)
         return SiparisSil(siparis=siparis)
 
 class Mutation(graphene.ObjectType):

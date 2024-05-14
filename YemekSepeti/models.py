@@ -10,43 +10,36 @@ class Category(models.Model):
 
     def __str__(self):  
         return self.name
+class Restoran(models.Model):
+    name = models.CharField(max_length=100)
+    adres = models.CharField(max_length=255)
+    telefon = models.CharField(max_length=15)
+    acilisSaati = models.TimeField()
+    kapanis_saati = models.TimeField()
+    email=models.EmailField(blank=True)
+    puan = models.FloatField(())
+    resim = models.ImageField()
+    min_tutar=models.FloatField(())
+    category=models.CharField(max_length=20)
+    
 
     def __str__(self):
         return self.name
+
 class Urun(models.Model):
-    urun_id=models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     image=models.ImageField()
     fiyat = models.DecimalField(max_digits=8, decimal_places=2)
     detay = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+    restoran = models.ForeignKey(Restoran, on_delete=models.CASCADE, default=1)
     
 
     def __str__(self):
         return self.name
     
-class Restoran(models.Model):
-    id=models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=100)
-    adres = models.CharField(max_length=255)
-    telefon = models.CharField(max_length=15)
-    acilis_saati = models.TimeField()
-    kapanis_saati = models.TimeField()
-    email=models.EmailField(blank=True)
-    puan = models.DecimalField(max_digits=2, decimal_places=1, blank=True)
-    resim = models.ImageField()
-    min_tutar=models.DecimalField(max_digits=2, decimal_places=1,default=None)
-    category=models.CharField(max_length=20)
-    urun = models.ForeignKey(Urun, on_delete=models.CASCADE, default=1)
-    
 
-    def __str__(self):
-        return self.name
-
-    
 class Siparis(models.Model):
-    sip_id=models.IntegerField(default=0)
-    mus_id = models.ForeignKey(Kullanici, on_delete=models.CASCADE)
     siparis_tarihi = models.DateTimeField(auto_now_add=True)
     teslim_tarihi = models.DateField()
     tutar = models.DecimalField(max_digits=10, decimal_places=2)
@@ -56,11 +49,11 @@ class Siparis(models.Model):
         return self.sip_id
     
 class SiparisDetay(models.Model):
-    siparis = models.ForeignKey(Siparis, on_delete=models.CASCADE, related_name='siparis_detaylari')
-    urun = models.ForeignKey(Urun, on_delete=models.CASCADE)
     miktar = models.PositiveIntegerField()
     fiyat = models.DecimalField(max_digits=10, decimal_places=2)
     toplam_tutar = models.DecimalField(max_digits=10, decimal_places=2)
+    siparis = models.ForeignKey(Siparis, on_delete=models.CASCADE, related_name='siparis_detaylari')
+    urun = models.ForeignKey(Urun, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.siparis} - {self.urun}"
@@ -72,7 +65,7 @@ class TeslimatAdresi(models.Model):
     cadde=models.CharField(max_length=50)
     bina=models.CharField(max_length=50)
     kapi=models.CharField(max_length=50)
-    musteri=models.ForeignKey(Kullanici,on_delete=models.CASCADE)
+    kullanici=models.ForeignKey(Kullanici,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.il

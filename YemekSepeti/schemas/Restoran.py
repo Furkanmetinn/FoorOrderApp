@@ -14,39 +14,38 @@ class Query(graphene.ObjectType):
         return Restoran.objects.all()
 
 
-class UrunInput(graphene.InputObjectType):
-    detay = graphene.String()
-    fiyat = graphene.Decimal()
+# class UrunInput(graphene.InputObjectType):
+#     detay = graphene.String()
+#     fiyat = graphene.Decimal()
 
 class RestoranEkle(graphene.Mutation):
     class Arguments:
-        id=graphene.ID()
         name = graphene.String(required=True)
         adres=graphene.String(required=True)
         telefon=graphene.String(required=True)
-        acilis_saati=graphene.Time(required=True)
+        acilisSaati=graphene.Time(required=True)
         kapanis_saati=graphene.Time(required=True)
         email=graphene.String()
-        puan=graphene.Decimal(required=True)
+        puan=graphene.Float(required=True)
         resim=graphene.String(required=True)
-        min_tutar=graphene.Decimal(required=True)
+        min_tutar=graphene.Float(required=True)
         category=graphene.String(required=True)
-        urun=UrunInput(required=True)
+        # urun=UrunInput(required=True)
 
     restoran=Field(RestoranType)
         
     @classmethod
-    def mutate(cls,root,info,name,adres,telefon,acilis_saati,kapanis_saati,email,puan,resim,min_tutar,category,urun):
+    def mutate(cls,root,info,name,adres,telefon,acilisSaati,kapanis_saati,email,puan,resim,min_tutar,category):
         restoran=Restoran()
         restoran.name=name
         restoran.adres=adres
         restoran.telefon=telefon
-        restoran.acilis_saati=acilis_saati
+        restoran.acilisSaati=acilisSaati
         restoran.kapanis_saati=kapanis_saati
         restoran.email=email
-        restoran.puan=Decimal(puan)
+        restoran.puan=puan
         restoran.resim=resim
-        restoran.min_tutar=Decimal(min_tutar)
+        restoran.min_tutar=min_tutar
         restoran.category=category
         
         # urun=Urun(detay=urun.detay,fiyat=urun.fiyat)
@@ -57,34 +56,35 @@ class RestoranEkle(graphene.Mutation):
 
 class RestoranGuncelle(graphene.Mutation):
     class Arguments:
-        id=graphene.ID()
         name = graphene.String(required=True)
         adres=graphene.String(required=True)
         telefon=graphene.String(required=True)
-        acilis_saati=graphene.Time(required=True)
+        acilisSaati=graphene.Time(required=True)
         kapanis_saati=graphene.Time(required=True)
         email=graphene.String()
         puan=graphene.Decimal(required=True)
         resim=graphene.String(required=True)
         min_tutar=graphene.Decimal(required=True)
         category=graphene.String(required=True)
-        urun=graphene.String(required=True)
+        # urun=UrunInput(required=True)
     restoran=Field(RestoranType)
 
     @classmethod
-    def mutate(cls,root,info,id,name,adres,telefon,acilis_saati,kapanis_saati,email,puan,resim,min_tutar,category,urun):
+    def mutate(cls,root,info,name,adres,telefon,acilisSaati,kapanis_saati,email,puan,resim,min_tutar,category,urun):
         restoran=Restoran.objects.get(pk=id)
         restoran.name=name
         restoran.adres=adres
         restoran.telefon=telefon
-        restoran.acilis_saati=acilis_saati
+        restoran.acilisSaati=acilisSaati
         restoran.kapanis_saati=kapanis_saati
         restoran.email=email
         restoran.puan=puan
         restoran.resim=resim
         restoran.min_tutar=min_tutar
         restoran.category=category
-        #restoran.urun=urun
+        # urun=Urun(detay=urun.detay,fiyat=urun.fiyat)
+        # urun.save()
+        # restoran.urun_id=urun.urun_id
         restoran.save()
         return RestoranGuncelle(restoran=restoran)
           

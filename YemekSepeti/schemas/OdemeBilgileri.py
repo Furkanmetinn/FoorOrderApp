@@ -17,7 +17,6 @@ class Query(graphene.ObjectType):
 
 class OdemeEkle(graphene.Mutation):
     class Arguments:
-        id=graphene.ID()
         kart_sahibi = graphene.String(required=True)
         kart_numarasi = graphene.String(required=True)
         son_kullanma=graphene.String(required=True)
@@ -37,7 +36,6 @@ class OdemeEkle(graphene.Mutation):
 
 class OdemeGuncelle(graphene.Mutation):
     class Arguments:
-        id=graphene.ID()
         kart_sahibi = graphene.String(required=True)
         kart_numarasi = graphene.String(required=True)
         son_kullanma=graphene.String(required=True)
@@ -48,7 +46,7 @@ class OdemeGuncelle(graphene.Mutation):
     odeme=Field(OdemeType)
 
     @classmethod
-    def mutate(cls,root,info,id,kart_sahibi,kart_numarasi,son_kullanma,cvv):
+    def mutate(cls,root,info,kart_sahibi,kart_numarasi,son_kullanma,cvv):
         odeme=OdemeBilgileri.objects.get(pk=id)
         odeme.kart_sahibi=kart_sahibi
         odeme.kart_numarasi=kart_numarasi

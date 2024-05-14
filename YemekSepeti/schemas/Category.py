@@ -17,7 +17,6 @@ class Query(graphene.ObjectType):
     
 class KategoriEkle(graphene.Mutation):
     class Arguments:
-        id=graphene.ID()
         name=graphene.String(required=True)
     kategori=Field(CategoryType)
 
@@ -30,7 +29,6 @@ class KategoriEkle(graphene.Mutation):
     
 class KategoriGuncelle(graphene.Mutation):
     class Arguments:
-        id=graphene.ID()
         name=graphene.String(required=True)
     kategori=Field(CategoryType)
 
