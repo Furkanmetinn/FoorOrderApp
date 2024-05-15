@@ -29,7 +29,7 @@ class Restoran(models.Model):
 class Urun(models.Model):
     name = models.CharField(max_length=100)
     image=models.ImageField()
-    fiyat = models.DecimalField(max_digits=8, decimal_places=2)
+    fiyat = models.FloatField()
     detay = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     restoran = models.ForeignKey(Restoran, on_delete=models.CASCADE, default=1)

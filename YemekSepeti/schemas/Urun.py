@@ -32,7 +32,7 @@ class UrunEkle(graphene.Mutation):
     class Arguments:
         name = graphene.String(required=True)
         image=graphene.String()
-        fiyat=graphene.Decimal(required=True)
+        fiyat=graphene.Float(required=True)
         detay=graphene.String(required=True)
         category=CategoryInput(required=True)
         restoran=RestoranInput(required=True)
@@ -47,10 +47,10 @@ class UrunEkle(graphene.Mutation):
         urun.detay=detay
         category=Category(name=category.name)
         category.save()
-        urun.id=category.id
+        urun.category_id=category.id
         restoran=Restoran(name=restoran.name,adres=restoran.adres,telefon=restoran.telefon, acilis_saati=restoran.acilis_saati,kapanis_saati=restoran.kapanis_saati,email=restoran.email,puan=restoran.puan,resim=restoran.resim,min_tutar=restoran.min_tutar,category=restoran.category)
         restoran.save()
-        urun.id=restoran.id
+        urun.restoran_id=restoran.id
         urun.save()
         return UrunEkle(urun=urun)
 

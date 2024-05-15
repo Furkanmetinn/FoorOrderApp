@@ -112,12 +112,24 @@ class ResetPassword(graphene.Mutation):
         token = token_generator.make_token(user)
 
         return ResetPassword(success=True)
+    
 
+class GetKullanici(graphene.Mutation):
+    class Arguments:
+        email=graphene.String(required=True)
+    kullanici=Field(KullaniciType)
+
+    @classmethod
+    def mutate(cls, root, info, email):
+        kullanici=Kullanici.objects.get(email=email)
+        return GetKullanici(kullanici=kullanici)
+    
 class Mutation(graphene.ObjectType):
     kullanici_ekle=KullaniciEkle.Field()
     kullanici_guncelle=KullaniciGuncelle.Field()
     kullanici_sil=KullaniciSil.Field()
     login=Login.Field()
     reset_password = ResetPassword.Field()
+    get_kullanici = GetKullanici.Field()
 
 kullanici_schema=graphene.Schema(query=Query,mutation=Mutation)
