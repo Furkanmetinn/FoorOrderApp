@@ -42,7 +42,7 @@ class Urun(models.Model):
 class Siparis(models.Model):
     siparis_tarihi = models.DateTimeField(auto_now_add=True)
     teslim_tarihi = models.DateField()
-    tutar = models.DecimalField(max_digits=10, decimal_places=2)
+    tutar = models.FloatField()
     durum = models.CharField(max_length=20, choices=[("Bekliyor", "Bekliyor"), ("Onaylandı", "Onaylandı"), ("Tamamlandı", "Tamamlandı"), ("İptal Edildi", "İptal Edildi")])
 
     def __str__(self):

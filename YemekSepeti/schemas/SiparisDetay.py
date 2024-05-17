@@ -16,19 +16,19 @@ class Query(graphene.ObjectType):
 class SiparisInput(graphene.InputObjectType):  
     siparis_tarihi=graphene.DateTime()
     teslim_tarihi=graphene.DateTime()
-    tutar=graphene.Decimal()
+    tutar=graphene.Float()
     durum=graphene.String()
 
 class UrunInput(graphene.InputObjectType):
     name = graphene.String()
     image=graphene.String()
-    fiyat=graphene.Decimal()
+    fiyat=graphene.Float()
     detay=graphene.String()
 class SiparisDetayEkle(graphene.Mutation):
     class Arguments:
         miktar=graphene.Int(required=True)
-        fiyat=graphene.Decimal(required=True)
-        toplam_tutar=graphene.Decimal(required=True)
+        fiyat=graphene.Float(required=True)
+        toplam_tutar=graphene.Float(required=True)
         siparis=SiparisInput(required=True)
         urun=UrunInput(required=True)
     siparisDetay=Field(SiparisDetayType)
@@ -52,8 +52,8 @@ class SiparisDetayEkle(graphene.Mutation):
 class SiparisDetayGuncelle(graphene.Mutation):
     class Arguments:
         miktar=graphene.Int(required=True)
-        fiyat=graphene.Decimal(required=True)
-        toplam_tutar=graphene.Decimal(required=True)
+        fiyat=graphene.Float(required=True)
+        toplam_tutar=graphene.Float(required=True)
         siparis=SiparisInput(required=True)
         urun=UrunInput(required=True)
     siparisDetay=Field(SiparisDetayType)

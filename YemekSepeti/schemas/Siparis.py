@@ -18,7 +18,7 @@ class SiparisEkle(graphene.Mutation):
     class Arguments:
         siparis_tarihi=graphene.DateTime(required=True)
         teslim_tarihi=graphene.DateTime(required=True)
-        tutar=graphene.Decimal(required=True)
+        tutar=graphene.Float(required=True)
         durum=graphene.String(required=True)
     siparis=Field(SiparisType)
 
@@ -36,7 +36,7 @@ class SiparisGuncelle(graphene.Mutation):
     class Arguments:
         siparis_tarihi=graphene.DateTime(required=True)
         teslim_tarihi=graphene.DateTime(required=True)
-        tutar=graphene.Decimal(required=True)
+        tutar=graphene.Float(required=True)
         durum=graphene.String(required=True)
     siparis=Field(SiparisType)
 
