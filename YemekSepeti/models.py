@@ -50,8 +50,8 @@ class Siparis(models.Model):
     
 class SiparisDetay(models.Model):
     miktar = models.PositiveIntegerField()
-    fiyat = models.DecimalField(max_digits=10, decimal_places=2)
-    toplam_tutar = models.DecimalField(max_digits=10, decimal_places=2)
+    fiyat = models.FloatField()
+    toplam_tutar = models.FloatField()
     siparis = models.ForeignKey(Siparis, on_delete=models.CASCADE, related_name='siparis_detaylari')
     urun = models.ForeignKey(Urun, on_delete=models.CASCADE)
 

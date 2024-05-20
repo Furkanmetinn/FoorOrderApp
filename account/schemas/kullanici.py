@@ -24,10 +24,11 @@ class KullaniciEkle(graphene.Mutation):
         sifre=graphene.String(required=True)
         sifre_dogrulama=graphene.String(required=True)
         hesap_tipi=graphene.String(required=True)
+        dogum_gunu=graphene.DateTime(required=True)
     kullanici=Field(KullaniciType)
 
     @classmethod
-    def mutate(cls,root,info,isim,soyisim,email,sifre,sifre_dogrulama, hesap_tipi):
+    def mutate(cls,root,info,isim,soyisim,email,sifre,sifre_dogrulama, hesap_tipi,dogum_gunu):
         kullanici=Kullanici()
         kullanici.isim=isim
         kullanici.soyisim=soyisim
@@ -35,6 +36,7 @@ class KullaniciEkle(graphene.Mutation):
         kullanici.sifre=sifre
         kullanici.sifre_dogrulama=sifre_dogrulama
         kullanici.hesap_tipi=hesap_tipi
+        kullanici.dogum_gunu=dogum_gunu
         kullanici.save()
         return KullaniciEkle(kullanici=kullanici)
 
@@ -48,10 +50,11 @@ class KullaniciGuncelle(graphene.Mutation):
         sifre=graphene.String(required=True)
         sifre_dogrulama=graphene.String(required=True)
         hesap_tipi=graphene.String(required=True)
+        dogum_gunu=graphene.DateTime(required=True)
     kullanici=Field(KullaniciType)
 
     @classmethod
-    def mutate(cls, root, info, id,isim,soyisim,email,sifre,sifre_dogrulama,hesap_tipi):
+    def mutate(cls, root, info, id,isim,soyisim,email,sifre,sifre_dogrulama,hesap_tipi,dogum_gunu):
         kullanici=Kullanici.objects.get(pk=id)
         kullanici.isim=isim
         kullanici.soyisim=soyisim
@@ -59,6 +62,7 @@ class KullaniciGuncelle(graphene.Mutation):
         kullanici.sifre=sifre
         kullanici.sifre_dogrulama=sifre_dogrulama
         kullanici.hesap_tipi=hesap_tipi
+        kullanici.dogum_gunu=dogum_gunu
         kullanici.save()
         return KullaniciGuncelle(kullanici=kullanici)
     
