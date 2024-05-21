@@ -1,6 +1,6 @@
 from graphene import Field
 import graphene
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate,login
 from graphene_django import DjangoObjectType
 from account.models import Kullanici
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
@@ -24,11 +24,10 @@ class KullaniciEkle(graphene.Mutation):
         sifre=graphene.String(required=True)
         sifre_dogrulama=graphene.String(required=True)
         hesap_tipi=graphene.String(required=True)
-        dogum_gunu=graphene.DateTime(required=True)
     kullanici=Field(KullaniciType)
 
     @classmethod
-    def mutate(cls,root,info,isim,soyisim,email,sifre,sifre_dogrulama, hesap_tipi,dogum_gunu):
+    def mutate(cls,root,info,isim,soyisim,email,sifre,sifre_dogrulama, hesap_tipi):
         kullanici=Kullanici()
         kullanici.isim=isim
         kullanici.soyisim=soyisim
@@ -36,7 +35,6 @@ class KullaniciEkle(graphene.Mutation):
         kullanici.sifre=sifre
         kullanici.sifre_dogrulama=sifre_dogrulama
         kullanici.hesap_tipi=hesap_tipi
-        kullanici.dogum_gunu=dogum_gunu
         kullanici.save()
         return KullaniciEkle(kullanici=kullanici)
 
@@ -50,11 +48,10 @@ class KullaniciGuncelle(graphene.Mutation):
         sifre=graphene.String(required=True)
         sifre_dogrulama=graphene.String(required=True)
         hesap_tipi=graphene.String(required=True)
-        dogum_gunu=graphene.DateTime(required=True)
     kullanici=Field(KullaniciType)
 
     @classmethod
-    def mutate(cls, root, info, id,isim,soyisim,email,sifre,sifre_dogrulama,hesap_tipi,dogum_gunu):
+    def mutate(cls, root, info, id,isim,soyisim,email,sifre,sifre_dogrulama,hesap_tipi):
         kullanici=Kullanici.objects.get(pk=id)
         kullanici.isim=isim
         kullanici.soyisim=soyisim
@@ -62,7 +59,6 @@ class KullaniciGuncelle(graphene.Mutation):
         kullanici.sifre=sifre
         kullanici.sifre_dogrulama=sifre_dogrulama
         kullanici.hesap_tipi=hesap_tipi
-        kullanici.dogum_gunu=dogum_gunu
         kullanici.save()
         return KullaniciGuncelle(kullanici=kullanici)
     
@@ -80,23 +76,20 @@ class Login(graphene.Mutation):
     class Arguments:
         email=graphene.String(required=True)
         sifre=graphene.String(required=True)
-    login=Field(KullaniciType)
-
-    def resolve_login(self, info, email, sifre, **kwargs):
-        auth_user = authenticate(email=email, sifre=sifre)
-
-        if auth_user == None:
-            raise Exception("Geçersiz kimlik bilgileri")
-
-        return Kullanici
+    login=graphene.Field(KullaniciType)
     
     @classmethod
     def mutate(cls, root, info, email,sifre):
-        login=Login()
-        login.email=email
-        login.sifre=sifre
-        login.save()
-        return Login(login=login)
+        kullanici = authenticate(email=email, password=sifre)
+
+        if kullanici is None:
+            raise Exception("geçersiz kimlik bilgileri")
+        
+        login(info.context,kullanici)
+        return Login(login=kullanici)
+    
+
+
     
 class ResetPassword(graphene.Mutation):
     class Arguments:
