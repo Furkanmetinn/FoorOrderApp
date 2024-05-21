@@ -21,7 +21,7 @@ class KategoriEkle(graphene.Mutation):
     kategori=Field(CategoryType)
 
     @classmethod
-    def mutate(cls,root,info,id,name):
+    def mutate(cls,root,info,name):
         kategori=Category()
         kategori.name=name
         kategori.save()

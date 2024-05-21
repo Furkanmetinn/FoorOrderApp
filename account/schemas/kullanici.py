@@ -2,6 +2,8 @@ from graphene import Field
 import graphene
 from django.contrib.auth import authenticate,login
 from graphene_django import DjangoObjectType
+from YemekSepeti.models import Restoran
+from YemekSepeti.schemas.Restoran import RestoranType
 from account.models import Kullanici
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
@@ -121,6 +123,16 @@ class GetKullanici(graphene.Mutation):
         kullanici=Kullanici.objects.get(email=email)
         return GetKullanici(kullanici=kullanici)
     
+class GetRestoran(graphene.Mutation):
+    class Arguments:
+        email=graphene.String(required=True)
+    restoran=Field(RestoranType)
+
+    @classmethod
+    def mutate(cls,root,info,email):
+        restoran=Restoran.objects.get(email=email)
+        return GetRestoran(restoran=restoran)
+    
 class Mutation(graphene.ObjectType):
     kullanici_ekle=KullaniciEkle.Field()
     kullanici_guncelle=KullaniciGuncelle.Field()
@@ -128,5 +140,6 @@ class Mutation(graphene.ObjectType):
     login=Login.Field()
     reset_password = ResetPassword.Field()
     get_kullanici = GetKullanici.Field()
+    get_restoran=GetRestoran.Field()
 
 kullanici_schema=graphene.Schema(query=Query,mutation=Mutation)
