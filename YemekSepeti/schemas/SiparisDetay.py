@@ -27,24 +27,22 @@ class UrunInput(graphene.InputObjectType):
 class SiparisDetayEkle(graphene.Mutation):
     class Arguments:
         miktar=graphene.Int(required=True)
-        fiyat=graphene.Float(required=True)
         toplam_tutar=graphene.Float(required=True)
         siparis=SiparisInput(required=True)
         urun=UrunInput(required=True)
     siparisDetay=Field(SiparisDetayType)
 
     @classmethod
-    def mutate(cls, root,info,siparis,urun,miktar,fiyat,toplam_tutar):
+    def mutate(cls, root,info,siparis,urun,miktar,toplam_tutar):
         siparisDetay=SiparisDetay()
         siparisDetay.miktar=miktar
-        siparisDetay.fiyat=fiyat
         siparisDetay.toplam_tutar=toplam_tutar
         siparis=Siparis(siparis_tarihi=siparis.siparis_tarihi,teslim_tarihi=siparis.teslim_tarihi,tutar=siparis.tutar,durum=siparis.durum)
         siparis.save()
-        siparisDetay.id=siparis.id
+        siparisDetay.siparis_id=siparis.id
         urun=Urun(name=urun.name,image=urun.image,fiyat=urun.fiyat,detay=urun.detay)
         urun.save()
-        siparisDetay.id=urun.id
+        siparisDetay.urun_id=urun.id
         siparisDetay.save()
         return SiparisDetayEkle(siparisDetay=siparisDetay)
 
@@ -52,25 +50,23 @@ class SiparisDetayEkle(graphene.Mutation):
 class SiparisDetayGuncelle(graphene.Mutation):
     class Arguments:
         miktar=graphene.Int(required=True)
-        fiyat=graphene.Float(required=True)
         toplam_tutar=graphene.Float(required=True)
         siparis=SiparisInput(required=True)
         urun=UrunInput(required=True)
     siparisDetay=Field(SiparisDetayType)
 
-    def mutate(cls,root, info, siparis, urun,miktar,fiyat,toplam_tutar):
+    def mutate(cls,root, info, siparis, urun,miktar,toplam_tutar):
         siparisDetay=SiparisDetay.objects.get(pk=id)
         siparisDetay.siparis=siparis
         siparisDetay.urun=urun
         siparisDetay.miktar=miktar
-        siparisDetay.fiyat=fiyat
         siparisDetay.toplam_tutar=toplam_tutar
         siparis=Siparis(siparis_tarihi=siparis.siparis_tarihi,teslim_tarihi=siparis.teslim_tarihi,tutar=siparis.tutar,durum=siparis.durum)
         siparis.save()
-        siparisDetay.id=siparis.id
+        siparisDetay.siparis_id=siparis.id
         urun=Urun(name=urun.name,image=urun.image,fiyat=urun.fiyat,detay=urun.detay)
         urun.save()
-        siparisDetay.id=urun.id
+        siparisDetay.siparis_id=urun.id
         siparisDetay.save()
         return SiparisDetayGuncelle(siparisDetay=siparisDetay)
         

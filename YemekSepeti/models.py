@@ -14,7 +14,7 @@ class Restoran(models.Model):
     name = models.CharField(max_length=100)
     adres = models.CharField(max_length=255)
     telefon = models.CharField(max_length=15)
-    acilisSaati = models.TimeField()
+    acilis_saati = models.TimeField()
     kapanis_saati = models.TimeField()
     email=models.EmailField(blank=True)
     puan = models.FloatField(())
@@ -46,11 +46,10 @@ class Siparis(models.Model):
     durum = models.CharField(max_length=20, choices=[("Bekliyor", "Bekliyor"), ("Onaylandı", "Onaylandı"), ("Tamamlandı", "Tamamlandı"), ("İptal Edildi", "İptal Edildi")])
 
     def __str__(self):
-        return self.sip_id
+        return self.durum
     
 class SiparisDetay(models.Model):
     miktar = models.PositiveIntegerField()
-    fiyat = models.FloatField()
     toplam_tutar = models.FloatField()
     siparis = models.ForeignKey(Siparis, on_delete=models.CASCADE, related_name='siparis_detaylari')
     urun = models.ForeignKey(Urun, on_delete=models.CASCADE)

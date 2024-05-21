@@ -23,9 +23,9 @@ class RestoranInput(graphene.InputObjectType):
     acilis_saati=graphene.Time(required=True)
     kapanis_saati=graphene.Time(required=True)
     email=graphene.String()
-    puan=graphene.Decimal(required=True)
+    puan=graphene.Float(required=True)
     resim=graphene.String(required=True)
-    min_tutar=graphene.Decimal(required=True)
+    min_tutar=graphene.Float(required=True)
     category=graphene.String(required=True)
 
 class UrunEkle(graphene.Mutation):
