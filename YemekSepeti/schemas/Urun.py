@@ -34,8 +34,8 @@ class UrunEkle(graphene.Mutation):
         image=graphene.String()
         fiyat=graphene.Float(required=True)
         detay=graphene.String(required=True)
-        category=CategoryInput(required=True)
-        restoran=RestoranInput(required=True)
+        category=graphene.Int(required=True)
+        restoran=graphene.Int(required=True)
     urun=Field(UrunType)
 
     @classmethod
@@ -45,12 +45,8 @@ class UrunEkle(graphene.Mutation):
         urun.image=image
         urun.fiyat=fiyat
         urun.detay=detay
-        category=Category(name=category.name)
-        category.save()
-        urun.category_id=category.id
-        restoran=Restoran(name=restoran.name,adres=restoran.adres,telefon=restoran.telefon, acilis_saati=restoran.acilis_saati,kapanis_saati=restoran.kapanis_saati,email=restoran.email,puan=restoran.puan,resim=restoran.resim,min_tutar=restoran.min_tutar,category=restoran.category)
-        restoran.save()
-        urun.restoran_id=restoran.id
+        urun.category_id=category
+        urun.restoran_id=restoran
         urun.save()
         return UrunEkle(urun=urun)
 

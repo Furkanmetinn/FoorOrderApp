@@ -17,10 +17,13 @@ class Restoran(models.Model):
     acilis_saati = models.TimeField()
     kapanis_saati = models.TimeField()
     email=models.EmailField(blank=True)
+    sifre=models.CharField(max_length=20,default="")
     puan = models.FloatField(())
     resim = models.ImageField()
     min_tutar=models.FloatField(())
     category=models.CharField(max_length=20)
+    hesap_tipi=models.CharField(max_length=20, choices=[("Kullanici","Kullanici"),("Restoran","Restoran")],default="")
+    
     
 
     def __str__(self):

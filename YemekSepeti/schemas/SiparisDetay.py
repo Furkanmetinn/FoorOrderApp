@@ -28,8 +28,8 @@ class SiparisDetayEkle(graphene.Mutation):
     class Arguments:
         miktar=graphene.Int(required=True)
         toplam_tutar=graphene.Float(required=True)
-        siparis=SiparisInput(required=True)
-        urun=UrunInput(required=True)
+        siparis=graphene.Int(required=True)
+        urun=graphene.Int(required=True)
     siparisDetay=Field(SiparisDetayType)
 
     @classmethod
@@ -37,12 +37,8 @@ class SiparisDetayEkle(graphene.Mutation):
         siparisDetay=SiparisDetay()
         siparisDetay.miktar=miktar
         siparisDetay.toplam_tutar=toplam_tutar
-        siparis=Siparis(siparis_tarihi=siparis.siparis_tarihi,teslim_tarihi=siparis.teslim_tarihi,tutar=siparis.tutar,durum=siparis.durum)
-        siparis.save()
-        siparisDetay.siparis_id=siparis.id
-        urun=Urun(name=urun.name,image=urun.image,fiyat=urun.fiyat,detay=urun.detay)
-        urun.save()
-        siparisDetay.urun_id=urun.id
+        siparisDetay.siparis_id=siparis
+        siparisDetay.urun_id=urun
         siparisDetay.save()
         return SiparisDetayEkle(siparisDetay=siparisDetay)
 
@@ -51,8 +47,8 @@ class SiparisDetayGuncelle(graphene.Mutation):
     class Arguments:
         miktar=graphene.Int(required=True)
         toplam_tutar=graphene.Float(required=True)
-        siparis=SiparisInput(required=True)
-        urun=UrunInput(required=True)
+        siparis=graphene.Int(required=True)
+        urun=graphene.Int(required=True)
     siparisDetay=Field(SiparisDetayType)
 
     def mutate(cls,root, info, siparis, urun,miktar,toplam_tutar):
@@ -61,12 +57,8 @@ class SiparisDetayGuncelle(graphene.Mutation):
         siparisDetay.urun=urun
         siparisDetay.miktar=miktar
         siparisDetay.toplam_tutar=toplam_tutar
-        siparis=Siparis(siparis_tarihi=siparis.siparis_tarihi,teslim_tarihi=siparis.teslim_tarihi,tutar=siparis.tutar,durum=siparis.durum)
-        siparis.save()
-        siparisDetay.siparis_id=siparis.id
-        urun=Urun(name=urun.name,image=urun.image,fiyat=urun.fiyat,detay=urun.detay)
-        urun.save()
-        siparisDetay.siparis_id=urun.id
+        siparisDetay.siparis_id=siparis
+        siparisDetay.siparis_id=urun
         siparisDetay.save()
         return SiparisDetayGuncelle(siparisDetay=siparisDetay)
         

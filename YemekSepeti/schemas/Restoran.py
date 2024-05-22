@@ -22,15 +22,17 @@ class RestoranEkle(graphene.Mutation):
         acilis_saati=graphene.Time(required=True)
         kapanis_saati=graphene.Time(required=True)
         email=graphene.String()
+        sifre=graphene.String()
         puan=graphene.Float(required=True)
         resim=graphene.String(required=True)
         min_tutar=graphene.Float(required=True)
         category=graphene.String(required=True)
+        hesap_tipi=graphene.String(required=True)
 
     restoran=Field(RestoranType)
         
     @classmethod
-    def mutate(cls,root,info,name,adres,telefon,acilis_saati,kapanis_saati,email,puan,resim,min_tutar,category):
+    def mutate(cls,root,info,name,adres,telefon,acilis_saati,kapanis_saati,email,sifre,puan,resim,min_tutar,category,hesap_tipi):
         restoran=Restoran()
         restoran.name=name
         restoran.adres=adres
@@ -38,10 +40,12 @@ class RestoranEkle(graphene.Mutation):
         restoran.acilis_saati=acilis_saati
         restoran.kapanis_saati=kapanis_saati
         restoran.email=email
+        restoran.sifre=sifre
         restoran.puan=puan
         restoran.resim=resim
         restoran.min_tutar=min_tutar
         restoran.category=category
+        restoran.hesap_tipi=hesap_tipi
         restoran.save()
         return RestoranEkle(restoran=restoran)
 
@@ -53,14 +57,16 @@ class RestoranGuncelle(graphene.Mutation):
         acilisSaati=graphene.Time(required=True)
         kapanis_saati=graphene.Time(required=True)
         email=graphene.String()
+        sifre=graphene.String()
         puan=graphene.Decimal(required=True)
         resim=graphene.String(required=True)
         min_tutar=graphene.Decimal(required=True)
         category=graphene.String(required=True)
+        hesap_tipi=graphene.String(required=True)
     restoran=Field(RestoranType)
 
     @classmethod
-    def mutate(cls,root,info,name,adres,telefon,acilis_saati,kapanis_saati,email,puan,resim,min_tutar,category,urun):
+    def mutate(cls,root,info,name,adres,telefon,acilis_saati,kapanis_saati,email,sifre,puan,resim,min_tutar,category,hesap_tipi):
         restoran=Restoran.objects.get(pk=id)
         restoran.name=name
         restoran.adres=adres
@@ -68,10 +74,12 @@ class RestoranGuncelle(graphene.Mutation):
         restoran.acilis_saati=acilis_saati
         restoran.kapanis_saati=kapanis_saati
         restoran.email=email
+        restoran.sifre=sifre
         restoran.puan=puan
         restoran.resim=resim
         restoran.min_tutar=min_tutar
         restoran.category=category
+        restoran.hesap_tipi=hesap_tipi
         restoran.save()
         return RestoranGuncelle(restoran=restoran)
           

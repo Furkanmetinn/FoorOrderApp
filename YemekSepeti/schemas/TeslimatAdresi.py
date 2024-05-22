@@ -31,11 +31,11 @@ class TeslimatEkle(graphene.Mutation):
         cadde=graphene.String(required=True)
         bina=graphene.String(required=True)
         kapi=graphene.String(required=True)
-        kullanici=KullaniciInput(required=True)
+        kullanici=graphene.Int(required=True)
     Teslimat_Adresi=Field(TeslimatType)
 
     @classmethod
-    def mutate(cls, root, info, il, ilce,mahalle,cadde,bina,kapi):
+    def mutate(cls, root, info, il, ilce,mahalle,cadde,bina,kapi,kullanici):
         teslimat=TeslimatAdresi()
         teslimat.il=il
         teslimat.ilce=ilce
@@ -43,9 +43,7 @@ class TeslimatEkle(graphene.Mutation):
         teslimat.cadde=cadde
         teslimat.bina=bina
         teslimat.kapi=kapi
-        kullanici=Kullanici(isim=kullanici.isim,soyisim=kullanici.soyisim,email=kullanici.email,sifre=kullanici.sifre,sifre_dogrulama=kullanici.sifrfe_dogrulama,hesap_tipi=kullanici.hesap_tipi)
-        kullanici.save()
-        teslimat.id=kullanici.id
+        teslimat.id=kullanici
         teslimat.save()
         return TeslimatEkle(teslimat=teslimat)
 
@@ -57,12 +55,12 @@ class TeslimatGuncelle(graphene.Mutation):
         cadde=graphene.String(required=True)
         bina=graphene.String(required=True)
         kapi=graphene.String(required=True)
-        kullanici=KullaniciInput(required=True)
+        kullanici=graphene.Int(required=True)
 
     teslimat=Field(TeslimatType)
 
     @classmethod
-    def mutate(cls,root,info,il,ilce,mahalle,cadde,bina,kapi):
+    def mutate(cls,root,info,il,ilce,mahalle,cadde,bina,kapi,kullanici):
         teslimat=TeslimatAdresi.objects.get(pk=id)
         teslimat.il=il
         teslimat.ilce=ilce
@@ -70,9 +68,7 @@ class TeslimatGuncelle(graphene.Mutation):
         teslimat.cadde=cadde
         teslimat.bina=bina
         teslimat.kapi=kapi
-        kullanici=Kullanici(isim=kullanici.isim,soyisim=kullanici.soyisim,email=kullanici.email,sifre=kullanici.sifre,sifre_dogrulama=kullanici.sifrfe_dogrulama,hesap_tipi=kullanici.hesap_tipi)
-        kullanici.save()
-        teslimat.id=kullanici.id
+        teslimat.id=kullanici
         teslimat.save()
         return TeslimatGuncelle(teslimat=teslimat)
         

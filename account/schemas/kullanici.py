@@ -24,18 +24,16 @@ class KullaniciEkle(graphene.Mutation):
         soyisim=graphene.String(required=True)
         email=graphene.String(required=True)
         sifre=graphene.String(required=True)
-        sifre_dogrulama=graphene.String(required=True)
         hesap_tipi=graphene.String(required=True)
     kullanici=Field(KullaniciType)
 
     @classmethod
-    def mutate(cls,root,info,isim,soyisim,email,sifre,sifre_dogrulama, hesap_tipi):
+    def mutate(cls,root,info,isim,soyisim,email,sifre, hesap_tipi):
         kullanici=Kullanici()
         kullanici.isim=isim
         kullanici.soyisim=soyisim
         kullanici.email=email
         kullanici.sifre=sifre
-        kullanici.sifre_dogrulama=sifre_dogrulama
         kullanici.hesap_tipi=hesap_tipi
         kullanici.save()
         return KullaniciEkle(kullanici=kullanici)
@@ -48,18 +46,16 @@ class KullaniciGuncelle(graphene.Mutation):
         soyisim=graphene.String(required=True)
         email=graphene.String(required=True)
         sifre=graphene.String(required=True)
-        sifre_dogrulama=graphene.String(required=True)
         hesap_tipi=graphene.String(required=True)
     kullanici=Field(KullaniciType)
 
     @classmethod
-    def mutate(cls, root, info, id,isim,soyisim,email,sifre,sifre_dogrulama,hesap_tipi):
+    def mutate(cls, root, info, id,isim,soyisim,email,sifre,hesap_tipi):
         kullanici=Kullanici.objects.get(pk=id)
         kullanici.isim=isim
         kullanici.soyisim=soyisim
         kullanici.email=email
         kullanici.sifre=sifre
-        kullanici.sifre_dogrulama=sifre_dogrulama
         kullanici.hesap_tipi=hesap_tipi
         kullanici.save()
         return KullaniciGuncelle(kullanici=kullanici)
@@ -78,17 +74,18 @@ class Login(graphene.Mutation):
     class Arguments:
         email=graphene.String(required=True)
         sifre=graphene.String(required=True)
-    login=graphene.Field(KullaniciType)
+    kullanici=graphene.Field(KullaniciType)
     
     @classmethod
     def mutate(cls, root, info, email,sifre):
-        kullanici = authenticate(email=email, password=sifre)
-
-        if kullanici is None:
-            raise Exception("geçersiz kimlik bilgileri")
         
-        login(info.context,kullanici)
-        return Login(login=kullanici)
+        try:
+            kullanici = Kullanici.objects.get(email=email,sifre=sifre)
+        except:
+            raise Exception("geçersiz kimlik bilgileri")
+            
+        
+        return Login(kullanici=kullanici)
     
 
 
