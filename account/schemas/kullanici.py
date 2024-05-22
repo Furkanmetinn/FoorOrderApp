@@ -2,10 +2,12 @@ from graphene import Field
 import graphene
 from django.contrib.auth import authenticate,login
 from graphene_django import DjangoObjectType
+import graphql_jwt
 from YemekSepeti.models import Restoran
 from YemekSepeti.schemas.Restoran import RestoranType
 from account.models import Kullanici
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+
 
 class KullaniciType(DjangoObjectType):
     class Meta:
@@ -138,5 +140,9 @@ class Mutation(graphene.ObjectType):
     reset_password = ResetPassword.Field()
     get_kullanici = GetKullanici.Field()
     get_restoran=GetRestoran.Field()
+    token_auth = graphql_jwt.ObtainJSONWebToken.Field()
+    verify_token = graphql_jwt.Verify.Field()
+    refresh_token = graphql_jwt.Refresh.Field()
+    revoke_token = graphql_jwt.Revoke.Field()
 
 kullanici_schema=graphene.Schema(query=Query,mutation=Mutation)
