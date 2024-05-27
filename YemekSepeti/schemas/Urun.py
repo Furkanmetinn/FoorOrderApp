@@ -84,6 +84,7 @@ class UrunSil(graphene.Mutation):
     @classmethod
     def mutate(cls,root,info,id):
         urun=Urun.objects.get(pk=id)
+        urun.delete()
         return UrunSil(urun=urun)
     
 class Mutation(graphene.ObjectType):

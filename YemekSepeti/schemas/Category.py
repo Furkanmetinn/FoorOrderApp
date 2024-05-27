@@ -47,6 +47,7 @@ class KategorSil(graphene.Mutation):
     @classmethod
     def mutate(cls,root,info,id):
         kategori=Category.objects.get(pk=id)
+        kategori.delete()
         return KategorSil(kategori=kategori)
     
 class Mutation(graphene.ObjectType):

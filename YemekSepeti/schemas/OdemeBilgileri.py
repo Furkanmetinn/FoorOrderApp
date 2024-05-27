@@ -63,6 +63,7 @@ class OdemeSil(graphene.Mutation):
     @classmethod
     def mutate(cls,root,info,id):
         odeme=OdemeBilgileri.objects.get(pk=id)
+        odeme.delete()
         return OdemeSil(odeme=odeme)
     
 class Mutation(graphene.ObjectType):

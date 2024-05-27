@@ -80,6 +80,7 @@ class TeslimatSil(graphene.Mutation):
     @classmethod
     def mutate(cls,root,info,id):
         teslimat=TeslimatAdresi.objects.get(pk=id)
+        teslimat.delete()
         return TeslimatSil(teslimat=teslimat)
     
 class Mutation(graphene.ObjectType):

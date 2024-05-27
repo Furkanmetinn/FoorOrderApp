@@ -70,6 +70,7 @@ class KullaniciSil(graphene.Mutation):
     @classmethod
     def mutate(cls,root,info,id):
         kullanici=Kullanici.objects.get(pk=id)
+        kullanici.delete()
         return KullaniciSil(kullanici=kullanici)
 
 class Login(graphene.Mutation):

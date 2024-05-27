@@ -59,6 +59,7 @@ class SiparisSil(graphene.Mutation):
     @classmethod
     def mutate(cls,root,info,id):
         siparis=Siparis.objects.get(pk=id)
+        siparis.delete()
         return SiparisSil(siparis=siparis)
 
 class Mutation(graphene.ObjectType):

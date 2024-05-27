@@ -92,6 +92,7 @@ class RestoranSil(graphene.Mutation):
     @classmethod
     def mutate(cls,root,info,id):
         restoran=Restoran.objects.get(pk=id)
+        restoran.delete()
         return RestoranSil(restoran=restoran)
     
 class Mutation(graphene.ObjectType):
