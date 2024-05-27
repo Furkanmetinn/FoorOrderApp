@@ -7,6 +7,11 @@ from YemekSepeti.models import Restoran
 from YemekSepeti.schemas.Restoran import RestoranType
 from account.models import Kullanici
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+
 
 
 class KullaniciType(DjangoObjectType):
@@ -89,8 +94,6 @@ class Login(graphene.Mutation):
             
         
         return Login(kullanici=kullanici)
-    
-
 
     
 class ResetPassword(graphene.Mutation):
@@ -101,16 +104,26 @@ class ResetPassword(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info, email):
-        user_model = Kullanici()
         try:
-            user = user_model.objects.get(email=email)
-        except user_model.DoesNotExist:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
             return ResetPassword(success=False)
 
         token_generator = PasswordResetTokenGenerator()
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = token_generator.make_token(user)
 
+        # E-posta gönderme işlemi
+        send_mail(
+            'Şifre Sıfırlama',
+            f'Merhaba {user.username}',
+            'from@example.com',
+            [user.email],
+            fail_silently=False,
+        )
+
         return ResetPassword(success=True)
+    
     
 
 class GetKullanici(graphene.Mutation):

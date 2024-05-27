@@ -1,6 +1,5 @@
 from django.db import models
-from django.db import models
-from datetime import datetime
+
 
 class Kullanici(models.Model):
     isim = models.CharField(max_length=255)
@@ -12,4 +11,3 @@ class Kullanici(models.Model):
 
     def __str__(self):
         return f"{self.isim} {self.soyisim}"
-    
