@@ -6,6 +6,7 @@ class Kullanici(models.Model):
     soyisim = models.CharField(max_length=255)
     email = models.EmailField(blank=True)
     sifre = models.CharField(max_length=255)
+    telefon_no=models.CharField(max_length=11,default="")
     hesap_tipi=models.CharField(max_length=20, choices=[("Kullanici","Kullanici"),("Restoran","Restoran")])
     
 

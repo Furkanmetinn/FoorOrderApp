@@ -29,13 +29,14 @@ class KategoriEkle(graphene.Mutation):
     
 class KategoriGuncelle(graphene.Mutation):
     class Arguments:
-        name=graphene.String(required=True)
+        name=graphene.String()
     kategori=Field(CategoryType)
 
     @classmethod
     def mutate(cls,root,info,id,name):
         kategori=Category.objects.get(pk=id)
-        kategori.name=name
+        if name is not None:
+            kategori.name=name
         kategori.save()
         return KategoriGuncelle(kategori=kategori)
     

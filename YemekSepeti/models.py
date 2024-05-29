@@ -43,22 +43,28 @@ class Urun(models.Model):
     
 
 class Siparis(models.Model):
+
+    @property
+    def toplam_tutar(self):
+        return sum([item.urun.fiyat*item.miktar for item in self.siparis_items.all()])
+            
+        
+    
+class SiparisItem(models.Model):
     siparis_tarihi = models.DateTimeField(auto_now_add=True)
     teslim_tarihi = models.DateField()
     tutar = models.FloatField()
+    miktar = models.PositiveIntegerField()
     durum = models.CharField(max_length=20, choices=[("Bekliyor", "Bekliyor"), ("Onaylandı", "Onaylandı"), ("Tamamlandı", "Tamamlandı"), ("İptal Edildi", "İptal Edildi")])
+    urun = models.ForeignKey(Urun, on_delete=models.CASCADE)
+    siparis=models.ForeignKey(Siparis,related_name="siparis_items", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.durum
     
-class SiparisDetay(models.Model):
-    miktar = models.PositiveIntegerField()
-    toplam_tutar = models.FloatField()
-    siparis = models.ForeignKey(Siparis, on_delete=models.CASCADE, related_name='siparis_detaylari')
-    urun = models.ForeignKey(Urun, on_delete=models.CASCADE)
+    
+    
 
-    def __str__(self):
-        return f"{self.siparis} - {self.urun}"
 
 class TeslimatAdresi(models.Model):
     il=models.CharField(max_length=50)

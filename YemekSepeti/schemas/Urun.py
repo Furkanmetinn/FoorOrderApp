@@ -52,27 +52,29 @@ class UrunEkle(graphene.Mutation):
 
 class UrunGuncelle(graphene.Mutation):
     class Arguments:
-        name = graphene.String(required=True)
+        name = graphene.String()
         image=graphene.String()
-        fiyat=graphene.Decimal(required=True)
-        detay=graphene.String(required=True)
-        category=CategoryInput(required=True)
-        restoran=RestoranInput(required=True)
+        fiyat=graphene.Decimal()
+        detay=graphene.String()
+        category=graphene.Int()
+        restoran=graphene.Int()
     urun=Field(UrunType)
 
     @classmethod
-    def mutate(cls,root,info,name,image,fiyat,detay,category):
+    def mutate(cls,root,info,name,image,fiyat,detay,category,restoran):
         urun=Urun.objects.get(pk=id)
-        urun.name=name
-        urun.image=image
-        urun.fiyat=fiyat
-        urun.detay=detay
-        category=Category(name=category.name)
-        category.save()
-        urun.id=category.id
-        restoran=Restoran(name=restoran.name,adres=restoran.adres,telefon=restoran.telefon, acilis_saati=restoran.acilis_saati,kapanis_saati=restoran.kapanis_saati,email=restoran.email,puan=restoran.puan,resim=restoran.resim,min_tutar=restoran.min_tutar,category=restoran.category)
-        restoran.save()
-        urun.id=restoran.id
+        if name is not None:
+            urun.name=name
+        if image is not None:
+            urun.image=image
+        if fiyat is not None:
+            urun.fiyat=fiyat
+        if detay is not None:
+            urun.detay=detay
+        if category is not None:
+            urun.id=category
+        if restoran is not None:
+            urun.id=restoran
         urun.save()
         return UrunGuncelle(urun=urun)
         
