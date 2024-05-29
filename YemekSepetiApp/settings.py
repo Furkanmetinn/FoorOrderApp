@@ -52,7 +52,15 @@ INSTALLED_APPS = [
     'django_graphiql',
     "graphql_jwt.refresh_token.apps.RefreshTokenConfig",
 ]
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.example.com'  # SMTP sunucu adresi
+EMAIL_PORT = 587  # SMTP sunucu portu (Genellikle 587 veya 25)
+EMAIL_USE_TLS = True  # TLS kullanıyorsa True, aksi halde False
+EMAIL_HOST_USER = 'haticenurkarakaya29@gmail.com'  # SMTP sunucu kullanıcı adı
+EMAIL_HOST_PASSWORD = 'sifre'  # SMTP sunucu parolası
+DEFAULT_FROM_EMAIL = 'your_email@example.com'  # Varsayılan gönderen e-posta adresi
+
 
 GRAPHQL_JWT = {
     "JWT_VERIFY_EXPIRATION": True,
@@ -65,6 +73,7 @@ AUTHENTICATION_BACKENDS = [
     'graphql_jwt.backends.JSONWebTokenBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
 
 GRAPHENE = {
     'SCHEMA':'YemekSepetiApp.schema.schema',
@@ -85,6 +94,7 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
+
 
 APPEND_SLASH=False
 ROOT_URLCONF = 'YemekSepetiApp.urls'
