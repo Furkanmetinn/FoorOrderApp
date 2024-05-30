@@ -13,6 +13,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 import logging
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class KullaniciType(DjangoObjectType):
@@ -62,7 +63,7 @@ class KullaniciGuncelle(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info, id,isim,soyisim,email,sifre,telefon_no,hesap_tipi):
-        kullanici=Kullanici.objects.get(pk=id)
+        kullanici = Kullanici.objects.get(pk=id)
         kullanici.isim=isim
         kullanici.soyisim=soyisim
         kullanici.email=email

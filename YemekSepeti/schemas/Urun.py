@@ -63,18 +63,12 @@ class UrunGuncelle(graphene.Mutation):
     @classmethod
     def mutate(cls,root,info,name,image,fiyat,detay,category,restoran):
         urun=Urun.objects.get(pk=id)
-        if name is not None:
-            urun.name=name
-        if image is not None:
-            urun.image=image
-        if fiyat is not None:
-            urun.fiyat=fiyat
-        if detay is not None:
-            urun.detay=detay
-        if category is not None:
-            urun.id=category
-        if restoran is not None:
-            urun.id=restoran
+        urun.name=name
+        urun.image=image
+        urun.fiyat=fiyat
+        urun.detay=detay
+        urun.id=category
+        urun.id=restoran
         urun.save()
         return UrunGuncelle(urun=urun)
         
