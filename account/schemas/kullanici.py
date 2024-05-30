@@ -12,7 +12,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-
+import logging
 
 
 class KullaniciType(DjangoObjectType):
@@ -132,25 +132,35 @@ class ResetPassword(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, email):
+        logger = logging.getLogger(__name__)
+        logger.info(f"Received request to reset password for email: {email}")
+        
         try:
             user = Kullanici.objects.get(email=email)
+            logger.info(f"User found: {user}")
         except Kullanici.DoesNotExist:
+            logger.error(f"User with email {email} does not exist")
             return ResetPassword(success=False)
 
-        token_generator = CustomTokenGenerator()
-        token = token_generator.make_token(user)
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
-        reset_link = f"https://example.com/reset-password/?uid={uid}&token={token}"
+        try:
+            token_generator = CustomTokenGenerator()
+            token = token_generator.make_token(user)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            reset_link = f"https://example.com/reset-password/{uid}/{token}"
+            logger.info(f"Generated reset link: {reset_link}")
 
-        send_mail(
-            'Şifre Sıfırlama',
-            f'Lütfen şifrenizi sıfırlamak için aşağıdaki linke gidin: {reset_link}',
-            'metin.furkan016@gmail.com',
-            [user.email],
-            fail_silently=False,
-        )
-
-        return ResetPassword(success=True)
+            send_mail(
+                'Şifre Sıfırlama',
+                f'Lütfen şifrenizi sıfırlamak için aşağıdaki linke gidin: {reset_link}',
+                'metin.furkan016@gmail.com',
+                [user.email],
+                fail_silently=False,
+            )
+            logger.info(f"Password reset email sent to {email}")
+            return ResetPassword(success=True)
+        except Exception as e:
+            logger.error(f"Error during password reset process: {e}")
+            return ResetPassword(success=False)
 
     
 
