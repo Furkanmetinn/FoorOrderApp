@@ -57,7 +57,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.example.com'  # SMTP sunucu adresi
 EMAIL_PORT = 587  # SMTP sunucu portu (Genellikle 587 veya 25)
 EMAIL_USE_TLS = True  # TLS kullanıyorsa True, aksi halde False
-EMAIL_HOST_USER = 'haticenurkarakaya29@gmail.com'  # SMTP sunucu kullanıcı adı
+EMAIL_HOST_USER = 'metin.furkan016@gmail.com'  # SMTP sunucu kullanıcı adı
 EMAIL_HOST_PASSWORD = 'sifre'  # SMTP sunucu parolası
 DEFAULT_FROM_EMAIL = 'your_email@example.com'  # Varsayılan gönderen e-posta adresi
 

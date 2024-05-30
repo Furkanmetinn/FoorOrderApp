@@ -63,12 +63,18 @@ class KullaniciGuncelle(graphene.Mutation):
     @classmethod
     def mutate(cls, root, info, id,isim,soyisim,email,sifre,telefon_no,hesap_tipi):
         kullanici=Kullanici.objects.get(pk=id)
-        kullanici.isim=isim
-        kullanici.soyisim=soyisim
-        kullanici.email=email
-        kullanici.sifre=sifre
-        kullanici.telefon_no=telefon_no
-        kullanici.hesap_tipi=hesap_tipi
+        if isim is not None:
+            kullanici.isim=isim
+        if soyisim is not None:
+            kullanici.soyisim=soyisim
+        if email is not None:
+            kullanici.email=email
+        if sifre is not None:
+            kullanici.sifre=sifre
+        if telefon_no is not None:
+            kullanici.telefon_no=telefon_no
+        if hesap_tipi is not None:
+            kullanici.hesap_tipi=hesap_tipi
         kullanici.save()
         return KullaniciGuncelle(kullanici=kullanici)
     
@@ -105,24 +111,12 @@ class Login(graphene.Mutation):
 
 
 
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.utils.crypto import salted_hmac
-from django.utils.http import base36_to_int, int_to_base36
 
 class CustomTokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
-        """
-        Parola değiştiğinde kullanıcının şifresinin güncel olduğunu kontrol etmek için kullanılır.
-        """
-        # Şifrenin değeri boş olabilir, bu nedenle boş olup olmadığını kontrol etmek gerekir.
-        # Parola None olabilir çünkü bazı kullanıcılar parola kullanmamış olabilirler.
-        # Bu nedenle, şifre yoksa 'X' ile değiştiriyoruz.
         password = getattr(user, 'password', None)
         if password is None:
             password = 'X'
-        
-        # Kullanıcı ID'sini, şifreyi ve timestamp'i birleştirerek bir hash değeri oluşturuyoruz.
-        # Timestamp, kullanıcı şifresi değiştiğinde değişmesini sağlar.
         return '{}{}{}{}'.format(
             user.pk, password, timestamp, user.is_active
         )
@@ -139,31 +133,23 @@ class ResetPassword(graphene.Mutation):
     @staticmethod
     def mutate(root, info, email):
         try:
-            # Kullanıcıyı e-posta adresine göre al
             user = Kullanici.objects.get(email=email)
         except Kullanici.DoesNotExist:
-            # Eğer e-posta adresiyle bir kullanıcı bulunamazsa, başarısızlık döndür
             return ResetPassword(success=False)
 
-        # Şifre sıfırlama token'ı oluştur
         token_generator = CustomTokenGenerator()
         token = token_generator.make_token(user)
-        # token = default_token_generator(user)
-
-        # Token'ı içeren sıfırlama linkini oluştur
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         reset_link = f"https://example.com/reset-password/?uid={uid}&token={token}"
 
-        # Sıfırlama linkini e-posta ile kullanıcıya gönder
         send_mail(
             'Şifre Sıfırlama',
             f'Lütfen şifrenizi sıfırlamak için aşağıdaki linke gidin: {reset_link}',
-            'from@example.com',
+            'metin.furkan016@gmail.com',
             [user.email],
             fail_silently=False,
         )
 
-        # Başarılı olduğunu belirt
         return ResetPassword(success=True)
 
     
