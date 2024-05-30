@@ -63,18 +63,12 @@ class KullaniciGuncelle(graphene.Mutation):
     @classmethod
     def mutate(cls, root, info, id,isim,soyisim,email,sifre,telefon_no,hesap_tipi):
         kullanici=Kullanici.objects.get(pk=id)
-        if isim is not None:
-            kullanici.isim=isim
-        if soyisim is not None:
-            kullanici.soyisim=soyisim
-        if email is not None:
-            kullanici.email=email
-        if sifre is not None:
-            kullanici.sifre=sifre
-        if telefon_no is not None:
-            kullanici.telefon_no=telefon_no
-        if hesap_tipi is not None:
-            kullanici.hesap_tipi=hesap_tipi
+        kullanici.isim=isim
+        kullanici.soyisim=soyisim
+        kullanici.email=email
+        kullanici.sifre=sifre
+        kullanici.telefon_no=telefon_no
+        kullanici.hesap_tipi=hesap_tipi
         kullanici.save()
         return KullaniciGuncelle(kullanici=kullanici)
     
