@@ -48,14 +48,10 @@ class OdemeGuncelle(graphene.Mutation):
     @classmethod
     def mutate(cls,root,info,kart_sahibi,kart_numarasi,son_kullanma,cvv):
         odeme=OdemeBilgileri.objects.get(pk=id)
-        if kart_sahibi is not None:
-            odeme.kart_sahibi=kart_sahibi
-        if kart_numarasi is not None:
-            odeme.kart_numarasi=kart_numarasi
-        if son_kullanma is not None:
-            odeme.son_kullanma=son_kullanma
-        if cvv is not None:
-            odeme.cvv=cvv
+        odeme.kart_sahibi=kart_sahibi
+        odeme.kart_numarasi=kart_numarasi
+        odeme.son_kullanma=son_kullanma
+        odeme.cvv=cvv
         odeme.save()
         return OdemeGuncelle(odeme=odeme)
         

@@ -68,30 +68,18 @@ class RestoranGuncelle(graphene.Mutation):
     @classmethod
     def mutate(cls,root,info,name,adres,telefon,acilis_saati,kapanis_saati,email,sifre,puan,resim,min_tutar,category,hesap_tipi):
         restoran=Restoran.objects.get(pk=id)
-        if name is not None:
-            restoran.name=name
-        if adres is not None:
-            restoran.adres=adres
-        if telefon is not None:
-            restoran.telefon=telefon
-        if acilis_saati is not None:
-            restoran.acilis_saati=acilis_saati
-        if kapanis_saati is not None:
-            restoran.kapanis_saati=kapanis_saati
-        if email is not None:
-            restoran.email=email
-        if sifre is not None:
-            restoran.sifre=sifre
-        if puan is not None:
-            restoran.puan=puan
-        if resim is not None:
-            restoran.resim=resim
-        if min_tutar is not None:
-            restoran.min_tutar=min_tutar
-        if category is not None:
-            restoran.category=category
-        if hesap_tipi is not None:
-            restoran.hesap_tipi=hesap_tipi
+        restoran.name=name
+        restoran.adres=adres
+        restoran.telefon=telefon
+        restoran.acilis_saati=acilis_saati
+        restoran.kapanis_saati=kapanis_saati
+        restoran.email=email
+        restoran.sifre=sifre
+        restoran.puan=puan
+        restoran.resim=resim
+        restoran.min_tutar=min_tutar
+        restoran.category=category
+        restoran.hesap_tipi=hesap_tipi
         restoran.save()
         return RestoranGuncelle(restoran=restoran)
           

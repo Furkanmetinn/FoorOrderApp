@@ -35,8 +35,7 @@ class KategoriGuncelle(graphene.Mutation):
     @classmethod
     def mutate(cls,root,info,id,name):
         kategori=Category.objects.get(pk=id)
-        if name is not None:
-            kategori.name=name
+        kategori.name=name
         kategori.save()
         return KategoriGuncelle(kategori=kategori)
     

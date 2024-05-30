@@ -62,20 +62,13 @@ class TeslimatGuncelle(graphene.Mutation):
     @classmethod
     def mutate(cls,root,info,il,ilce,mahalle,cadde,bina,kapi,kullanici):
         teslimat=TeslimatAdresi.objects.get(pk=id)
-        if il is not None:
-            teslimat.il=il
-        if ilce is not None:
-            teslimat.ilce=ilce
-        if mahalle is not None:
-            teslimat.mahalle=mahalle
-        if cadde is not None:
-            teslimat.cadde=cadde
-        if bina is not None:
-            teslimat.bina=bina
-        if kapi is not None:
-            teslimat.kapi=kapi
-        if kullanici is not None:
-            teslimat.id=kullanici
+        teslimat.il=il
+        teslimat.ilce=ilce
+        teslimat.mahalle=mahalle
+        teslimat.cadde=cadde
+        teslimat.bina=bina
+        teslimat.kapi=kapi
+        teslimat.id=kullanici
         teslimat.save()
         return TeslimatGuncelle(teslimat=teslimat)
         
